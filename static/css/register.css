@@ -1,0 +1,60 @@
+.register {
+    width: 400px;
+    height: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+#register_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#register_form input {
+    border: none;
+    font-size: 18px;
+    background-color: #eeeeee;
+    padding: 10px 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    border-radius: 5px;
+}
+#register_form input:focus {
+    outline-color: #1b74e4;
+}
+#register_form div,
+.form_group {
+    width: 80%;
+}
+#register_form a {
+    text-decoration: none;
+}
+#register_form a:hover {
+    text-decoration: underline;
+}
+#register_form button {
+    font-size: 16px;
+    color: #fff;
+    background-color: #1b74e4;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+        rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.form_group label[id^="err"] {
+    color: red;
+    display: none;
+    font-size: 12px;
+    font-weight: 500;
+}

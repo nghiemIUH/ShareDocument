@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block content %}
+<div class="home">
+    <div class="_title">Menu</div>
+    <div class="introduce">
+        <span>Giới thiệu:</span>
+        <p>{{ intro.content }}</p>
+    </div>
+    <ul class="list_post">
+        {% for p in post %}
+        <li><a href="{% url 'post_detail'  p.id %}">{{ p.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}

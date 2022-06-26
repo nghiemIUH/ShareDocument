@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="documents">
+    {% csrf_token %} {% for doc in documents %}
+    <div class="document">
+        <div class="title">{{ doc.title }}</div>
+        <p class="description">{{ doc.description }}</p>
+        <div class="info">
+            <div class="calendar">
+                <i class="fa-solid fa-calendar-days"></i>{{ doc.date }}
+            </div>
+            <div class="download">
+                <i class="fa-solid fa-download"></i>
+                {{ doc.num_download }}
+            </div>
+            {% if doc.price > 0 %}
+            <div style="margin-right: 10px">
+                <i class="fa-solid fa-money-bill-1-wave"></i>{{ doc.price }}đ
+            </div>
+            <div>
+                <a href="{% url 'document:buy_document' doc.id %}">Buy</a>
+            </div>
+            {% else %}
+            <div onClick="addDowmload({{ doc.id }})">
+                <a href="/media/{{ doc.file}}">Download</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <script src="{% static 'js/document.js' %}"></script>
+</div>
+
+{% endblock %}

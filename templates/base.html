@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+        />
+        <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/post.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/register.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/document.css' %}" />
+        <script>
+            var disqus_developer = 1;
+        </script>
+        <script
+            src="https://kit.fontawesome.com/8139eb8202.js"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <body>
+        <div class="header">
+            <div class="menu">
+                <a href="/" class="active_menu">Trang chủ</a>
+                <a href="/document">Tài liệu</a>
+                <a href="/about">Liên hệ</a>
+            </div>
+            <div class="account">
+                {% if user.is_authenticated %}
+                <img src="/media/{{ user.avatar }}" alt="" />
+                <div>
+                    <div>{{ user.balance }} đ</div>
+                    <a href="{% url 'user:logout' %}">Logout</a>
+                </div>
+                {% else %}
+                <a href="{% url 'user:login' %}">Login</a>
+                <a href="{% url 'user:register' %}">Register</a>
+
+                {% endif %}
+            </div>
+        </div>
+        <div class="content">{% block content %} {% endblock %}</div>
+
+        <div class="footer"></div>
+    </body>
+    <script
+        id="dsq-count-scr"
+        src="//sharedocument.disqus.com/count.js"
+        async
+    ></script>
+
+    <script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</html>

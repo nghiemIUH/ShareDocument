@@ -1,0 +1,63 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="register">
+    <h1>Register</h1>
+    <form id="register_form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form_group">
+            <label for="" id="err_username">username error</label>
+            <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                required
+                id="username"
+            />
+        </div>
+        <div class="form_group">
+            <label for="" id="err_pass">pass error</label>
+            <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                id="password"
+                onblur="validate_pass()"
+            />
+        </div>
+        <div class="form_group">
+            <label for="" id="err_pass_cf">pass cf error</label>
+            <input
+                type="password"
+                name="password_cf"
+                placeholder="Password confirm"
+                id="password_cf"
+                onblur="validate_pass_cf()"
+            />
+        </div>
+        <div class="form_group">
+            <label for="" id="err_email">err email</label>
+            <input type="email" name="email" placeholder="Email" required />
+        </div>
+        <div class="form_group">
+            <label for="" id="err_fullName">pass fullName</label>
+            <input
+                type="text"
+                name="fullName"
+                placeholder="Full name"
+                required
+            />
+        </div>
+        <div>
+            <input type="file" name="avatar" placeholder="Avatar" required />
+        </div>
+        <div class="other">
+            <a href="{% url 'user:login' %}">Have account?</a>
+        </div>
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+    <script src="{% static 'js/register.js' %}"></script>
+</div>
+
+{% endblock content %}
