@@ -7,7 +7,7 @@
     </div>
     <ul class="list_post">
         {% for p in post %}
-        <li><a href="{% url 'post_detail'  p.id %}">{{ p.title }}</a></li>
+        <li><a href="{% url 'blog:post_detail'  p.id %}">{{ p.title }}</a></li>
         {% endfor %}
     </ul>
 </div>

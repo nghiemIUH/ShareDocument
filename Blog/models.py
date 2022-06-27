@@ -15,11 +15,19 @@ class Introduce(models.Model):
         return ' '.join(self.content.split()[:n//3])+'...'
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Post(models.Model):
     auth = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.TextField(blank=True)
-    content = RichTextUploadingField()
     date = models.DateField(default=datetime.datetime.now)
+    tag = models.ManyToManyField(Tag)
+    content = RichTextUploadingField()
 
     def __str__(self) -> str:
         return self.title

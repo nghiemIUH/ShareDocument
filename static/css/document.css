@@ -1,36 +1,47 @@
-.documents {
-    width: 50%;
+.documents{
+    width: 70%;
+    min-height: 100vh;
     margin: 0 auto;
-    margin-top: 30px;
-}
-
-.document {
-    margin-bottom: 20px;
-    padding: 5px 10px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-        rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    justify-content: center;
+    /* padding: 3% 10%; */
 }
 
-.document .title {
-    font-size: 18px;
-    font-weight: 600;
+.documents img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    margin: 0 auto;
+}
+.documents  .category{
+    padding: 3% 10%;
+}
+.documents  .category .ca_title{
+    font-size: 22px;
+    margin-top: 20px;
+    line-height: 1.4;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+}
+
+.documents .category ol{
+    padding-left: 30px;
+}
+.doc_item{
+    list-style-type: decimal;
     margin-bottom: 10px;
 }
-
-.document .info {
+.doc_item .info{
     display: flex;
     align-items: center;
-    padding: 15px 0;
-    font-size: 12px;
-    font-weight: 600;
+    margin-top: 10px;
+    font-size: 14px;
 }
-
-.document .info .download {
-    margin: 0 15px;
+.doc_item .info i{
+    padding: 5px;
+}
+.doc_item .info .buy_download{
+    margin-left: 20px;
 }

@@ -11,8 +11,8 @@ from django.conf import settings
 
 class DocumentView(View):
     def get(self, request):
-        documents = models.Document.objects.all()
-        return render(request, 'document.html', {'documents': documents})
+        category = models.Category.objects.all()
+        return render(request, 'document.html', {'category': category})
 
     def put(self, request):
         data = json.loads(request.body.decode('utf-8'))
