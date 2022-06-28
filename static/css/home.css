@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     margin-top: 20px;
-    width: 50%;
+    width: 70%;
     margin: 0 auto;
 }
 
@@ -12,6 +12,7 @@
 }
 .introduce p {
     margin: 5px 0 20px 0;
+    text-align: justify;
 }
 ._title {
     font-size: 50px;

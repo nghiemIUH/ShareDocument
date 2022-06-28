@@ -36,10 +36,15 @@
     </head>
     <body>
         <div class="header">
+            <div class="container" onclick="myFunction(this)">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
             <div class="menu">
-                <a href="/" class="active_menu">Trang chủ</a>
-                <a href="/document">Tài liệu</a>
-                <a href="/about">Liên hệ</a>
+                <a href="/" id="home">Trang chủ</a>
+                <a href="/document" id="document">Tài liệu</a>
+                <a href="/about" id="about">Liên hệ</a>
             </div>
             <div class="account">
                 {% if user.is_authenticated %}
@@ -58,8 +63,13 @@
             <div class="content">{% block content %} {% endblock %}</div>
             <div class="relative">
                 <div class="vanilla-calendar"></div>
-                <div class="category">
-                    <div class="category_title">RECENT POSTS</div>
+                <div class="recent_post">
+                    <div class="recent_post_title">RECENT POSTS</div>
+                    {% for p in posts %}
+                    <a href="{% url 'blog:post_detail'  p.id %}"
+                        ><p>{{ p.title }}</p></a
+                    >
+                    {% endfor %}
                 </div>
                 <div class="tag">
                     <div class="tag_title">TAGS</div>
@@ -88,6 +98,7 @@
         src="https://cdn.jsdelivr.net/npm/toastify-js"
     ></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script src="{% static 'js/base.js' %}"></script>
     <script>
         hljs.highlightAll();
     </script>

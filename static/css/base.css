@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: space-around;
     height: 60px;
+    width: 100%;
     background-color: #54bab9;
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -13,6 +14,7 @@
     align-items: center;
     justify-content: center;
     flex: 0.7;
+    font-weight: 800;
 }
 .header .account {
     display: flex;
@@ -52,9 +54,9 @@
 }
 
 .body {
-    width: 100vw;
+    /* width: 100vw; */
     display: flex;
-    margin-top: 5%;
+    margin-top: 2%;
 }
 
 .body .content {
@@ -64,44 +66,123 @@
     flex: 0.3;
 }
 
-.body .category,
+.body .recent_post,
 .tag {
-    min-height: 200px;
     width: 80%;
     margin: 15px 0;
 }
 
-.body .category_title {
+.body .recent_post_title {
     padding: 10px 0;
     border-bottom: 2px solid orange;
-    display: inline;
-    font-size: 30px;
-    font-weight: 700;
+    display: inline-block;
+    font-size: 1.1em;
+    font-weight: 900;
+    margin-bottom: 15px;
 }
 
 .body .tag_title {
     padding: 10px 0;
     border-bottom: 2px solid orange;
-    display: inline;
-    font-size: 30px;
-    font-weight: 700;
+    display: inline-block;
+    font-size: 1.1em;
+    font-weight: 900;
+    margin-bottom: 15px;
 }
 
 .body .tag .tag_content {
-    margin-top: 15px;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .body .tag .tag_content .tag_item {
     padding: 5px;
     border: 1px solid orange;
-    margin-right: 10px;
+    margin: 5px 5px 0 0;
 }
 
 .body .tag_item a {
     text-decoration: none;
-    color: #000;
+    color: #333;
 }
 .body .tag .tag_content .tag_item:hover {
     background-color: rgba(255, 169, 0, 0.24);
+}
+
+.recent_post a {
+    text-decoration: none;
+    color: #333;
+    padding: 0.5em;
+}
+.recent_post a:hover {
+    color: #f36a25;
+}
+
+.container {
+    display: inline-block;
+    cursor: pointer;
+    display: none;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+.change .bar2 {
+    opacity: 0;
+}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+
+/* < 600 */
+@media only screen and (max-width: 600px) {
+    .container {
+        display: block;
+    }
+}
+
+/* < 768 */
+@media only screen and (max-width: 768px) {
+    .relative {
+        display: none;
+    }
+    .content {
+        flex: 1 !important;
+    }
+    .content .home {
+        width: 70%;
+    }
+
+    .body {
+        display: block;
+    }
+    .body .content .post_detail {
+        width: 90%;
+    }
+}
+
+/* < 992 */
+@media only screen and (max-width: 992px) {
+}
+
+/* < 1200 */
+@media only screen and (max-width: 1200px) {
+}
+
+/* > 1200 */
+@media only screen and (min-width: 1200px) {
 }

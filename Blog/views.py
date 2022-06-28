@@ -5,7 +5,7 @@ from . models import Post, Introduce, Tag
 
 
 def index(request):
-    post = Post.objects.all()
+    post = Post.objects.all().order_by('-date')
     return render(request, 'home.html', {'post': post})
 
 
@@ -16,7 +16,7 @@ def post_detail(request, _id):
 
 def get_base_data(request):
     return {
-        'posts': Post.objects.all(),
+        'posts': Post.objects.all().order_by('-date')[:5],
         'tags': Tag.objects.all(),
         'intro': Introduce.objects.all()[0]
     }
