@@ -1,12 +1,19 @@
+body {
+    position: relative;
+}
+
 .header {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    height: 60px;
+    min-height: 60px;
     width: 100%;
     background-color: #54bab9;
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: fixed;
+    top: 0;
+    z-index: 10;
 }
 
 .header .menu {
@@ -54,9 +61,9 @@
 }
 
 .body {
-    /* width: 100vw; */
     display: flex;
-    margin-top: 2%;
+    margin-top: 90px;
+    position: relative;
 }
 
 .body .content {
@@ -64,6 +71,8 @@
 }
 .body .relative {
     flex: 0.3;
+    position: fixed;
+    right: 20px;
 }
 
 .body .recent_post,
@@ -152,6 +161,24 @@
 @media only screen and (max-width: 600px) {
     .container {
         display: block;
+        margin-left: 10px;
+    }
+    .header {
+        justify-content: space-between;
+    }
+
+    .header .menu {
+        display: none;
+        flex-direction: column;
+        background-color: #54bab9;
+    }
+
+    .header .menu a {
+        font-size: 16px;
+    }
+    .body {
+        display: block;
+        width: 100%;
     }
 }
 
@@ -177,6 +204,13 @@
 
 /* < 992 */
 @media only screen and (max-width: 992px) {
+    .body .relative {
+        right: 10px;
+    }
+    /* .header .menu {
+        display: flex;
+        flex-direction: row;
+    } */
 }
 
 /* < 1200 */
