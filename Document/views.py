@@ -12,7 +12,14 @@ from django.conf import settings
 class DocumentView(View):
     def get(self, request):
         category = models.Category.objects.all()
-        return render(request, 'document.html', {'category': category})
+        if request.user.is_authenticated:
+            document_user = models.DocumentUser.objects.values_list(
+                'document', flat=True).filter(user=request.user)
+            data = {'category': category, 'document_user': document_user}
+
+        else:
+            data = {'category': category}
+        return render(request, 'document.html', data)
 
     def put(self, request):
         data = json.loads(request.body.decode('utf-8'))
@@ -24,4 +31,16 @@ class DocumentView(View):
 
 @login_required(login_url=settings.LOGIN_URL)
 def buyDocument(request, id):
-    return redirect('document')
+    document = models.Document.objects.get(pk=id)
+    user = request.user
+    try:
+        document_user = models.DocumentUser.objects.get(user=user)
+
+    except:
+        document_user = models.DocumentUser.objects.create(user=user)
+
+    document_user.document.add(document)
+    document_user.save()
+    user.balance -= document.price
+    user.save()
+    return redirect('/document')

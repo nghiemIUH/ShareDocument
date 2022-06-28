@@ -15,7 +15,24 @@ form.addEventListener("submit", async (e) => {
             data = JSON.parse(data);
             if (data.result === "success") document.location.href = "/";
             else {
-                //
+                Toastify({
+                    text: "Username or password not correct",
+                    className: "error",
+                    duration: 2000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "center", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "red",
+                        borderRadius: "5px",
+                    },
+                    offset: {
+                        x: 0,
+                        y: 50,
+                    },
+                    onClick: function () {},
+                }).showToast();
             }
         });
 });

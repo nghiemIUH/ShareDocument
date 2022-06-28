@@ -2,9 +2,6 @@ const addDowmload = async (id) => {
     const csrftoken = document.querySelector(
         "[name=csrfmiddlewaretoken]"
     ).value;
-    const formData = new FormData();
-    formData.append("pk", id);
-    formData.append("csrfmiddlewaretoken", csrftoken);
 
     await fetch("", {
         method: "PUT",
@@ -16,7 +13,10 @@ const addDowmload = async (id) => {
         .then((response) => {
             return response.json();
         })
-        .then((data) => {
-            console.log(data);
-        });
+        .then((data) => {});
+};
+
+const buyDocument = (is_authenticated, doc_price, user_balance) => {
+    if (is_authenticated) return true;
+    return doc_price < user_balance;
 };

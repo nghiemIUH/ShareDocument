@@ -14,3 +14,14 @@ function myFunction(x) {
         menu.style.display = 'flex'
     }
 }
+
+window.onresize = ()=>{
+    const size = window.innerWidth
+    if(size >600){
+        document.getElementById('menu').style.display = 'flex'
+    }
+    else{
+        document.getElementById('menu').style.display = 'none'
+
+    }
+}

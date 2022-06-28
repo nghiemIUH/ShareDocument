@@ -1,4 +1,4 @@
-.documents{
+.documents {
     width: 70%;
     min-height: 100vh;
     margin: 0 auto;
@@ -9,39 +9,52 @@
     /* padding: 3% 10%; */
 }
 
-.documents img{
+.documents img {
     width: 100%;
     height: 300px;
     object-fit: cover;
     margin: 0 auto;
 }
-.documents  .category{
+.documents .category {
     padding: 3% 10%;
 }
-.documents  .category .ca_title{
+.documents .category .ca_title {
     font-size: 22px;
     margin-top: 20px;
     line-height: 1.4;
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
     font-weight: 700;
 }
 
-.documents .category ol{
+.documents .category ol {
     padding-left: 30px;
 }
-.doc_item{
+.doc_item {
     list-style-type: decimal;
     margin-bottom: 10px;
 }
-.doc_item .info{
+.doc_item .info {
     display: flex;
     align-items: center;
     margin-top: 10px;
     font-size: 14px;
 }
-.doc_item .info i{
+.doc_item .info i {
     padding: 5px;
 }
-.doc_item .info .buy_download{
+.doc_item .info .buy_download {
     margin-left: 20px;
+}
+.buy_download form button {
+    border: none;
+    padding: 5px;
+    background-color: #1363df;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.buy_download form button i {
+    padding: 0;
 }

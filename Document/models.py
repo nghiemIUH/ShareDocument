@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
@@ -22,3 +23,8 @@ class Document(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class DocumentUser(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    document = models.ManyToManyField(Document)
