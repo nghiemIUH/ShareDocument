@@ -36,6 +36,7 @@
                             onsubmit="return buyDocument({{doc.price}}, {{user.balance}})"
                             action="{% url 'document:buy_document' doc.id %}"
                         >
+                            {% csrf_token %}
                             <button type="submit">
                                 <i class="fa-solid fa-cart-plus"></i>Buy
                             </button>
