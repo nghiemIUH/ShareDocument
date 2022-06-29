@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-3q_-vyy%(t*v4)p=lbm^0mul$k3g#m9_zq+uq=c79i2%*ihtx!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['vndev.info']
+ALLOWED_HOSTS = ['vndev.info', 'local.deepcode.tk']
 
 # Application definition
 
@@ -126,7 +126,7 @@ AUTH_USER_MODEL = 'User.CustomUser'
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static/'
+STATIC_ROOT = BASE_DIR/'static/'
 
 # STATICFILES_DIRS = [
 #     BASE_DIR/'static'
