@@ -1,6 +1,8 @@
 #!/bin/bash
-echo '============Run collect static file django ============'
+sudo apt install python3-pip
+sudo apt install python3-venv
+python3 -m venv venv
 source venv/bin/activate
-python manage.py collectstatic --noinput
-echo '============Run docker ============'
+pip3 install django
+python3 manage.py collectstatic --noinput
 docker-compose up --build -d
