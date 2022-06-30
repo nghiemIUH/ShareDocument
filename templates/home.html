@@ -1,14 +1,16 @@
 {% extends "base.html" %} {% block content %}
 <div class="home">
-    <div class="_title">Menu</div>
+    <h1 class="_title">Bài viết</h1>
     <div class="introduce">
         <span>Giới thiệu:</span>
         <p>{{ intro.content }}</p>
     </div>
     <ul class="list_post">
-        {% for p in post %}
-        <li><a href="{% url 'blog:post_detail'  p.id %}">{{ p.title }}</a></li>
-        {% endfor %}
+        {% for p in post %} {% if not p.is_delete %}
+        <li>
+            <a href="{% url 'blog:post_detail' p.slug %}">{{ p.title }}</a>
+        </li>
+        {% endif %} {% endfor %}
     </ul>
 </div>
 {% endblock content %}

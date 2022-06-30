@@ -9,8 +9,8 @@ def index(request):
     return render(request, 'home.html', {'post': post})
 
 
-def post_detail(request, _id):
-    post = Post.objects.get(pk=_id)
+def post_detail(request, slug):
+    post = Post.objects.get(slug=slug)
     return render(request, 'post.html', {'post': post})
 
 
