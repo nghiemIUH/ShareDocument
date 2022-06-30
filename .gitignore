@@ -1,3 +1,7 @@
 venv
 static/admin
 static/ckeditor
+Blog/__pycache__
+Document/__pycache__
+ShareDocument/__pycache__
+User/__pycache__
