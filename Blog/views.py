@@ -26,3 +26,7 @@ def get_post_with_tag(request, tag):
     tag = Tag.objects.get(name=tag)
     post = tag.post_set.all()
     return render(request, 'home.html', {'post': post})
+
+
+def about(request):
+    return render(request, 'about.html')
