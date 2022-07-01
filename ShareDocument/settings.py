@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3q_-vyy%(t*v4)p=lbm^0mul$k3g#m9_zq+uq=c79i2%*ihtx!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['vndev.info', 'local.deepcode.tk', '127.0.0.1']
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'Blog',
     'Document',
 ]
+SITE_ID = 1
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
@@ -82,10 +83,23 @@ WSGI_APPLICATION = 'ShareDocument.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# sudo apt install python3-dev libpq-dev
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'sharedocument',
+        'USER': 'postgres',
+        'PASSWORD': 'nghiem@123',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
