@@ -1,7 +1,7 @@
 asgiref==3.5.2
 attrs==21.4.0
 autopep8==1.6.0
-backports.zoneinfo
+backports.zoneinfo==0.2.1
 bcrypt==3.2.2
 certifi==2022.6.15
 cffi==1.15.0
@@ -16,6 +16,7 @@ idna==3.3
 jsonschema==3.2.0
 paramiko==2.11.0
 Pillow==9.1.1
+psycopg2==2.9.3
 pycodestyle==2.8.0
 pycparser==2.21
 PyNaCl==1.5.0
@@ -29,5 +30,5 @@ texttable==1.6.4
 toml==0.10.2
 tzdata==2022.1
 urllib3==1.26.9
+uWSGI==2.0.20
 websocket-client==0.59.0
-uwsgi

@@ -25,3 +25,16 @@ services:
     command: uwsgi --http :8000 --module ShareDocument.wsgi
     volumes:
       - .:/code
+    depends_on:
+      - db
+  db:
+    restart: always
+    image: postgres
+    environment:
+      - POSTGRES_DB=sharedocument
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=nghiem@123
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"

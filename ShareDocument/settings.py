@@ -98,7 +98,7 @@ DATABASES = {
         'NAME': 'sharedocument',
         'USER': 'postgres',
         'PASSWORD': 'nghiem@123',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
