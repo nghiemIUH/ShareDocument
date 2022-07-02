@@ -3,5 +3,5 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
 COPY . /code/
+RUN cd /code/
 RUN pip install -r requirements.txt -q
-RUN python manage.py collectstatic --noinput
