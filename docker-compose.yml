@@ -1,6 +1,7 @@
 version: '2'
 services:
   nginx:
+    container_name: nginx
     restart: always
     build: ./nginx/
     ports:
@@ -14,6 +15,7 @@ services:
     depends_on:
       - web
   web:
+    container_name: web
     restart: always
     build: .
     expose:
@@ -27,7 +29,9 @@ services:
       - .:/code
     depends_on:
       - db
+
   db:
+    container_name: db
     restart: always
     image: postgres
     environment:
@@ -38,3 +42,5 @@ services:
       - 5432
     ports:
       - "5432:5432"
+    volumes:
+      - ../data:/var/lib/postgresql/data

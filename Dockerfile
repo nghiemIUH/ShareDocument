@@ -4,4 +4,4 @@ RUN mkdir /code
 WORKDIR /code
 COPY . /code/
 RUN cd /code/
-RUN pip install -r requirements.txt -q
+RUN pip install -r requirements.txt
