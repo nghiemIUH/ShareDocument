@@ -28,7 +28,7 @@ class Post(models.Model):
     auth = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.TextField(blank=True)
     date = models.DateField(default=datetime.datetime.now)
-    slug = models.SlugField(default='slug', blank=True)
+    slug = models.SlugField(default='slug', blank=True, max_length=255)
     tag = models.ManyToManyField(Tag)
     is_delete = models.BooleanField(default=False)
     content = RichTextUploadingField()

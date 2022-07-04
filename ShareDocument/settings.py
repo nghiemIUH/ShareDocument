@@ -219,5 +219,22 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/document/'
+
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://%s:%s/1" % (REDIS_HOST, REDIS_PORT),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+CACHE_TTL = 60 * 10
