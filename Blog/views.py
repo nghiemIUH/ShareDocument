@@ -1,12 +1,19 @@
-from unicodedata import name
 from django.shortcuts import render
 from . models import Post, Introduce, Tag
+from django.views.decorators.cache import cache_page
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.conf import settings
+import json
+
 # Create your views here.
 
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
+
+@cache_page(CACHE_TTL)
 def index(request):
-    post = Post.objects.all().order_by('-date')
-    return render(request, 'home.html', {'post': post})
+    posts = Post.objects.all().order_by('-date')
+    return render(request, 'home.html', {'post': posts})
 
 
 def post_detail(request, slug):
