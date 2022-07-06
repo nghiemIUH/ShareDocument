@@ -80,7 +80,7 @@
                 <div class="recent_post">
                     <div class="recent_post_title">RECENT POSTS</div>
                     {% for p in posts %}
-                    <a href="{% url 'blog:post_detail'  p.id %}"
+                    <a href="{% url 'blog:post_detail'  p.slug %}"
                         ><p>{{ p.title }}</p></a
                     >
                     {% endfor %}
