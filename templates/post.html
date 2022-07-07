@@ -1,7 +1,0 @@
-{% extends 'base.html' %} {% block content %}
-<div class="post_detail">
-    <div class="title">{{post.title}}</div>
-    <div class="content">{{ post.content | safe }}</div>
-    {% include 'comment.html' with id=post.id %}
-</div>
-{% endblock content %}

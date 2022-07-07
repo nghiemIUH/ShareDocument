@@ -1,0 +1,42 @@
+.tag {
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    background: #fff;
+    border: solid 1px #ebebeb;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin: 0 0 35px;
+
+    .title {
+        position: relative;
+        float: left;
+        width: 100%;
+        margin: 0;
+        h3 {
+            position: relative;
+            display: block;
+            height: 34px;
+            font-size: 17px;
+            color: #203656;
+            font-weight: 600;
+            line-height: 34px;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            border-bottom: 2px solid #f2f2f6;
+        }
+    }
+    .content {
+        a {
+            float: left;
+            padding: 5px;
+            border: solid 1px #ebebeb;
+            margin: 5px;
+            text-decoration: none;
+            color: #203656;
+        }
+    }
+}

@@ -23,6 +23,7 @@ urlpatterns = [
     path('user/', include('User.urls')),
     path('', include('Blog.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('document/', include('Document.urls'))
+    path('document/', include('Document.urls')),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

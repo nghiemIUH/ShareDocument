@@ -43,12 +43,17 @@ INSTALLED_APPS = [
     'User',
     'Blog',
     'Document',
+    'oauth2_provider',
+    'rest_framework',
+    "corsheaders",
 ]
 SITE_ID = 1
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,12 +63,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 ROOT_URLCONF = 'ShareDocument.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -238,5 +245,24 @@ CACHES = {
         }
     }
 }
-
+APPEND_SLASH = False
 CACHE_TTL = 60 * 10
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+OAUTH2_PROVIDER = {
+    # send json data
+    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+    # this is the list of available scopes
+    # expire access token
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 600,
+}
+CLIENT_ID = 'pr4Mb5hBF1DJT2jvysjMFAPwORtMxKnzTmGlK9xU'
+CLIENT_SECRET = 'kw69kxW8tgFnt0f61Fp1jTAn7QIJdSPFHHT2KTejjQZVMg6QGfhAbW9zXa7bTCMcvoXtcxDFtVGQ1oJUB4Dtj55o15byEWGVEj4Mhhs2gNIqN83zKx0liITbBHCGtINM'
+# password

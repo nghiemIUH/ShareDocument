@@ -1,0 +1,119 @@
+@import "../../Resposive.scss";
+
+.hot_wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: left;
+
+    @include responsive_max_600 {
+        flex-direction: column;
+    }
+
+    .hot_item {
+        flex: 0.47;
+        width: 100%;
+        height: 320px;
+        position: relative;
+        border-radius: 4px;
+        @include responsive_max_600 {
+            margin-bottom: 10px;
+            flex-direction: column;
+            height: 250px !important;
+            flex: none;
+        }
+
+        .img_inner_link {
+            width: 100%;
+            height: 100%;
+
+            &::after {
+                content: "";
+                background: #203656;
+                display: block;
+                height: 100%;
+                left: 0;
+                opacity: 0.6;
+                top: 0;
+                z-index: 1;
+                position: absolute;
+                width: 100%;
+                border-radius: 4px;
+            }
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 4px;
+            }
+        }
+        .post_info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0)
+                linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(1, 14, 46, 0.63))
+                repeat scroll 0 0;
+            z-index: 5;
+            box-sizing: border-box;
+            padding: 20px;
+            .post_tag {
+                position: relative;
+                display: inline-block;
+                height: 18px;
+                z-index: 5;
+                background-color: #fe4f70;
+                color: #fff;
+                font-size: 10px;
+                line-height: 18px;
+                font-weight: 700;
+                text-transform: uppercase;
+                padding: 0 6px;
+            }
+            .post_title {
+                font-size: 22px;
+                font-weight: 700;
+                display: block;
+                line-height: 1.5em;
+                margin: 8px 0 7px;
+                a {
+                    color: #fff;
+                    display: block;
+                    text-decoration: none;
+                }
+            }
+            .post_meta {
+                overflow: hidden;
+                color: #fff;
+                font-size: 13px;
+                font-weight: 400;
+                padding: 0 1px;
+                span {
+                    display: inline-block;
+                    margin: 0 10px 0 0;
+                }
+                .post_author {
+                    &::before {
+                        content: "\f007";
+                        font-family: FontAwesome;
+                        font-weight: 400;
+                        margin: 0 3px 0 0;
+                    }
+                }
+                .post_date {
+                    &::before {
+                        font-family: FontAwesome;
+                        font-weight: 400;
+                        margin: 0 3px 0 0;
+                        content: "\f017";
+                    }
+                }
+            }
+        }
+    }
+}
