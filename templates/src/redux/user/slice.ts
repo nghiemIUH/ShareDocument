@@ -55,5 +55,10 @@ export const userSlice = createSlice({
                 state.is_login = true;
             }
         );
+
+        builder.addCase(userAPI.logout().fulfilled, (state) => {
+            tokenService.remove();
+            return { ...initialState };
+        });
     },
 });

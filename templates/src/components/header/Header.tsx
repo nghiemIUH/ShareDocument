@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import style from "./Header.module.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
 import { GiCancel } from "react-icons/gi";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import userAPI from "../../redux/user/userAPI";
 
 const cls = classNames.bind(style);
 
@@ -14,6 +15,29 @@ function Header() {
 
     const [showSearch, setShowSearch] = useState(false);
     const [showToggle, setShowToggle] = useState(false);
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        const closeToggleUser = (event: Event) => {
+            const toggle = document.getElementById(
+                "account_username"
+            ) as HTMLDivElement;
+            if (userState.is_login) {
+                if (!toggle.contains(event.target as Node)) {
+                    setToggleUser(false);
+                }
+            }
+        };
+
+        document.addEventListener("click", closeToggleUser);
+        return () => document.removeEventListener("click", closeToggleUser);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleLogout = () => {
+        dispatch(userAPI.logout()());
+    };
 
     return (
         <div className={cls("header")}>
@@ -38,22 +62,26 @@ function Header() {
             >
                 <div className={cls("mobile_menu")}>
                     <ul>
-                        <li>
+                        <li onClick={() => setShowToggle(false)}>
                             <Link to="/">Trang chủ</Link>
                         </li>
 
-                        <li>
+                        <li onClick={() => setShowToggle(false)}>
                             <Link to="/document">Tài liệu</Link>
                         </li>
-                        <li>
+                        <li onClick={() => setShowToggle(false)}>
                             <Link to="/qa">Hỏi đáp</Link>
                         </li>
-                        <li>
-                            <Link to="/login">Đăng nhập</Link>
-                        </li>
-                        <li>
-                            <Link to="/register">Đăng ký</Link>
-                        </li>
+                        {!userState.is_login && (
+                            <>
+                                <li onClick={() => setShowToggle(false)}>
+                                    <Link to="/login">Đăng nhập</Link>
+                                </li>
+                                <li onClick={() => setShowToggle(false)}>
+                                    <Link to="/register">Đăng ký</Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>
@@ -106,6 +134,7 @@ function Header() {
                                 ? { borderBottom: "2px solid #203656" }
                                 : {}
                         }
+                        id="account_username"
                     >
                         {userState.user.username}
                         <span
@@ -126,7 +155,12 @@ function Header() {
                             <div className={cls("setting_account")}>
                                 Cài đặt tài khoản
                             </div>
-                            <div className={cls("logout")}>Đăng xuất</div>
+                            <div
+                                className={cls("logout")}
+                                onClick={handleLogout}
+                            >
+                                Đăng xuất
+                            </div>
                         </div>
                     </div>
                 </div>

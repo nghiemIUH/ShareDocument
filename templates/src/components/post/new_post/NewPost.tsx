@@ -1,39 +1,53 @@
-import React from "react";
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import style from "./NewPost.module.scss";
 import classNames from "classnames/bind";
 
+interface PostType {
+    id: string;
+    introduce: string;
+    title: string;
+    slug: string;
+    review_image: string;
+    date: string;
+    content: string;
+    auth: {
+        username: string;
+        avatar: string;
+        fullName: string;
+        email: string;
+    };
+}
+
+interface Props {
+    post: PostType;
+}
+
 const cls = classNames.bind(style);
 
-function NewPost() {
+function NewPost({ post }: Props) {
     return (
         <div className={cls("new_post")}>
             <div className={cls("post_content")}>
                 <Link to="/" className={cls("post-image-link")}>
-                    <img src="s11.jpg" alt="" />
+                    <img
+                        src={process.env.REACT_APP_URL + post.review_image}
+                        alt=""
+                    />
                 </Link>
                 <div className={cls("post_info")}>
                     <h2 className={cls("post_title")}>
-                        <Link to="/">
-                            Easiest Ice Cream You’ll Ever Make. No Ice-cream
-                            Maker
-                        </Link>
+                        <Link to="/">{post.title}</Link>
                     </h2>
                     <div className={cls("post_meta")}>
                         <span className={cls("post_author")}>
-                            Dang Van Nghiem
+                            {post.auth.fullName}
                         </span>
-                        <span className={cls("post_date")}>March 17, 2016</span>
+                        <span className={cls("post_date")}>{post.date}</span>
                     </div>
-                    <p className={cls("post_snippet")}>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Maiores, perferendis magni impedit reprehenderit
-                        doloremque vitae quisquam est cum voluptas. At rerum,
-                        quam repellendus labore velit temporibus tempora dolore
-                        omnis ratione?
-                    </p>
+                    <p className={cls("post_snippet")}>{post.introduce}</p>
                     <div className={cls("jump_link")}>
-                        <Link to="/">Read more</Link>{" "}
+                        <Link to="/">Read more</Link>
                     </div>
                 </div>
             </div>
@@ -41,4 +55,4 @@ function NewPost() {
     );
 }
 
-export default NewPost;
+export default memo(NewPost);

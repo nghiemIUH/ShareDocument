@@ -5,7 +5,16 @@ import { Link } from "react-router-dom";
 
 const cls = classNames.bind(style);
 
-function Category() {
+interface CategoryType {
+    title: string;
+    count: number;
+}
+
+interface Props {
+    categories: CategoryType[];
+}
+
+function Category({ categories }: Props) {
     return (
         <div className={cls("category")}>
             <div className={cls("title")}>
@@ -13,24 +22,18 @@ function Category() {
             </div>
             <div className={cls("content")}>
                 <ul>
-                    <li>
-                        <Link to="/" className={cls("label_name")}>
-                            Machine learning
-                            <span className={cls("label_count")}>(3)</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/" className={cls("label_name")}>
-                            Computer vision
-                            <span className={cls("label_count")}>(3)</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/" className={cls("label_name")}>
-                            Hacking
-                            <span className={cls("label_count")}>(3)</span>
-                        </Link>
-                    </li>
+                    {categories.map((value, index) => {
+                        return (
+                            <li key={index}>
+                                <Link to="/" className={cls("label_name")}>
+                                    {value.title}
+                                    <span className={cls("label_count")}>
+                                        ({value.count})
+                                    </span>
+                                </Link>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
         </div>

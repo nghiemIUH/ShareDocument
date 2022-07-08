@@ -35,6 +35,12 @@
         float: left;
         font-size: 30px;
         font-weight: 900;
+
+        @include responsive_max_600 {
+            font-size: 20px;
+            line-height: 50%;
+        }
+
         span {
             font-size: 40px;
             color: red;

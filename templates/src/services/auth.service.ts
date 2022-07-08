@@ -16,7 +16,15 @@ class AuthService {
         });
     }
     logout() {
-        tokenService.remove();
+        return axiosNotAuth({
+            url: "/o/revoke_token/",
+            method: "post",
+            data: {
+                token: tokenService.getAccessToken(),
+                client_id: process.env.REACT_APP_CLIENT_ID,
+                client_secret: process.env.REACT_APP_CLIENT_SECRET,
+            },
+        });
     }
     getUserInfo() {
         return axiosAuth({

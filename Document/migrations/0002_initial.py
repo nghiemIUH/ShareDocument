@@ -11,23 +11,18 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('Blog', '0001_initial'),
+        ('Document', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='post',
-            name='auth',
+            model_name='documentuser',
+            name='user',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
-            model_name='post',
+            model_name='document',
             name='category',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Blog.category'),
-        ),
-        migrations.AddField(
-            model_name='post',
-            name='tag',
-            field=models.ManyToManyField(to='Blog.tag'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Document.category'),
         ),
     ]

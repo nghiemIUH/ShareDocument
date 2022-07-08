@@ -23,6 +23,16 @@ class UserAPI {
             }
         );
     }
+
+    logout() {
+        return createAsyncThunk("user/logout", async (data, thunkAPI) => {
+            const result = await authService.logout();
+            if (result.status === 200) {
+                return result.data;
+            }
+            return thunkAPI.rejectWithValue("access_token_expired");
+        });
+    }
 }
 
 export default new UserAPI();

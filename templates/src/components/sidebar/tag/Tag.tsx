@@ -5,18 +5,28 @@ import { Link } from "react-router-dom";
 
 const cls = classNames.bind(style);
 
-function Tag() {
+interface TagType {
+    id: number;
+    name: string;
+}
+interface Props {
+    tags: TagType[];
+}
+
+function Tag({ tags }: Props) {
     return (
         <div className={cls("tag")}>
             <div className={"title"}>
                 <h3>Tags</h3>
             </div>
             <div className={cls("content")}>
-                <Link to="">machine learning</Link>
-                <Link to="">NLP</Link>
-                <Link to="">opencv</Link>
-                <Link to="">Nodejs</Link>
-                <Link to="">JavaScript</Link>
+                {tags.map((value, index) => {
+                    return (
+                        <Link to="" key={index}>
+                            {value.name}
+                        </Link>
+                    );
+                })}
             </div>
         </div>
     );
