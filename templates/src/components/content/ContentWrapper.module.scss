@@ -1,0 +1,65 @@
+@import "../Resposive.scss";
+.content_wrapper {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    width: 90%;
+
+    @include responsive_max_600 {
+        margin: 10px auto 0 !important;
+    }
+
+    @include responsive_min_600 {
+        margin: 10px auto 0 !important;
+    }
+
+    @include responsive_min_768 {
+        margin: 20px auto 0 !important;
+    }
+
+    @include responsive_min_992 {
+        margin: 40px auto 0 !important;
+    }
+
+    .container {
+        margin: 0;
+        width: 100%;
+
+        .main_wrapper {
+            float: left;
+            overflow: hidden;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            padding: 0;
+            margin: 0;
+
+            @include responsive_max_600 {
+                width: 100%;
+            }
+
+            @include responsive_min_600 {
+                width: 100%;
+            }
+
+            @include responsive_min_992 {
+                width: calc(100% - 375px);
+            }
+        }
+
+        .sidebar {
+            float: right;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            vertical-align: baseline;
+            background: 0 0;
+            text-decoration: none;
+            display: none;
+            width: 340px;
+
+            @include responsive_min_992 {
+                display: block;
+            }
+        }
+    }
+}
