@@ -25,7 +25,10 @@ function Category({ categories }: Props) {
                     {categories.map((value, index) => {
                         return (
                             <li key={index}>
-                                <Link to="/" className={cls("label_name")}>
+                                <Link
+                                    to={"/category/" + value.title}
+                                    className={cls("label_name")}
+                                >
                                     {value.title}
                                     <span className={cls("label_count")}>
                                         ({value.count})

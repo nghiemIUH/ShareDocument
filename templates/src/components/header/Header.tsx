@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import style from "./Header.module.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
@@ -180,4 +180,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default memo(Header);

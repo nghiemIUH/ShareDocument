@@ -46,3 +46,26 @@ class PostView(APIView, LimitOffsetPagination):
         results = self.paginate_queryset(posts, request, view=self)
         serializer = serializers.PostSerialize(results, many=True)
         return self.get_paginated_response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def getDetail(request, slug):
+    try:
+        post = models.Post.objects.get(slug=slug)
+        post_se = serializers.PostDetailSerialize(post)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response(data=post_se.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def getPostCategory(request, category_name):
+    try:
+        category = models.Category.objects.get(title=category_name)
+        posts = models.Post.objects.filter(category=category)
+        posts_se = serializers.PostSerialize(posts, many=True)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response(data=posts_se.data, status=status.HTTP_200_OK)
