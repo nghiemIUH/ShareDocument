@@ -1,0 +1,29 @@
+.footer {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 0;
+    border-top: solid 1px #ebebeb;
+    text-align: center;
+    .container {
+        box-sizing: border-box;
+        padding: 10px 20px;
+        .content {
+            font-size: 13px;
+            display: block;
+            height: 34px;
+            color: #203656;
+            font-weight: 600;
+            line-height: 34px;
+            span {
+                &::after {
+                    content: "\f004";
+                    font-family: FontAwesome;
+                    margin: 0 2px;
+                    color: red;
+                }
+            }
+        }
+    }
+}

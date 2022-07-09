@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Post, Introduce, Tag
+from .models import Post, Tag, Category
 # Register your models here.
-admin.site.register(Introduce)
 
 
 class TagInline(admin.TabularInline):
@@ -19,3 +18,4 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Post, PostAdmin)
+admin.site.register(Category)

@@ -9,14 +9,6 @@ from django.utils.text import slugify
 User = get_user_model()
 
 
-class Introduce(models.Model):
-    content = models.TextField(blank=False)
-
-    def __str__(self) -> str:
-        n = len(self.content.split())
-        return ' '.join(self.content.split()[:n//3])+'...'
-
-
 class Tag(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -24,12 +16,24 @@ class Tag(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=200)
+
+    def __str__(self) -> str:
+        return self.title
+
+
 class Post(models.Model):
+    introduce = models.TextField(default='Introduce')
     auth = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.TextField(blank=True)
     date = models.DateField(default=datetime.datetime.now)
     slug = models.SlugField(default='slug', blank=True, max_length=255)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag)
+    view = models.IntegerField(default=0)
+    review_image = models.FileField(
+        default='Facebook_Embed.png', upload_to='review_post_img')
     is_delete = models.BooleanField(default=False)
     content = RichTextUploadingField()
 
