@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-3q_-vyy%(t*v4)p=lbm^0mul$k3g#m9_zq+uq=c79i2%*ihtx!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['vndev.info', 'local.deepcode.tk', '127.0.0.1']
+ALLOWED_HOSTS = ['vndev.info', 'admin.deepcode.tk', '127.0.0.1']
 
 # Application definition
 
@@ -103,7 +103,7 @@ DATABASES = {
         'NAME': 'sharedocument',
         'USER': 'postgres',
         'PASSWORD': 'nghiem@123',
-        'HOST': 'db',
+        'HOST': 'db_production',
         'PORT': '5432',
     }
 }
@@ -146,8 +146,8 @@ USE_TZ = True
 AUTH_USER_MODEL = 'User.CustomUser'
 
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR/'static/'
+STATIC_URL = '/staticfiles/'  # url
+STATIC_ROOT = BASE_DIR/'staticfiles/'  # folder
 
 # STATICFILES_DIRS = [
 #     BASE_DIR/'static'
