@@ -25,7 +25,7 @@ interface Props {
 
 const cls = classNames.bind(style);
 
-function NewPost({ post }: Props) {
+const NewPost = ({ post }: Props): JSX.Element => {
     return (
         <div className={cls("new_post")}>
             <div className={cls("post_content")}>
@@ -58,6 +58,6 @@ function NewPost({ post }: Props) {
             </div>
         </div>
     );
-}
+};
 
 export default memo(NewPost);

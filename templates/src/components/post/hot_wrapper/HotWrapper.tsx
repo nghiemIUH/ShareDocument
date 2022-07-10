@@ -25,7 +25,7 @@ interface Props {
 
 const cls = classNames.bind(style);
 
-function HotWrapper({ posts }: Props) {
+const HotWrapper = ({ posts }: Props): JSX.Element => {
     return (
         <div className={cls("hot_wrapper")}>
             {posts.map((value, index) => {
@@ -64,6 +64,6 @@ function HotWrapper({ posts }: Props) {
             })}
         </div>
     );
-}
+};
 
 export default memo(HotWrapper);

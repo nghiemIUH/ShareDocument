@@ -24,82 +24,79 @@ interface PostType {
     };
 }
 
-interface PostStateType {
-    next: string | null;
-    newPost: PostType;
-    hotPost: PostType[];
-    posts: PostType[];
-}
+const Post = (): JSX.Element => {
+    const [next, setNext] = useState("/post/get-post/");
 
-function Post() {
-    const [post, setPost] = useState<PostStateType>({
-        next: "/post/get-post/",
-        newPost: {
-            id: "",
-            introduce: "",
-            title: "",
-            slug: "",
-            review_image: "",
-            date: "",
-            content: "",
-            auth: {
-                username: "",
-                avatar: "",
-                fullName: "",
-                email: "",
-            },
+    const [newPost, setNewPost] = useState<PostType>({
+        id: "",
+        introduce: "",
+        title: "",
+        slug: "",
+        review_image: "",
+        date: "",
+        content: "",
+        auth: {
+            username: "",
+            avatar: "",
+            fullName: "",
+            email: "",
         },
-        hotPost: [],
-        posts: [],
     });
 
+    const [hotPost, setHotPost] = useState<PostType[]>([]);
+    const [posts, setPosts] = useState<PostType[]>([]);
+
     useEffect(() => {
-        const res = async () => await postService.getPost(post.next as string);
+        const res = async () => await postService.getPost(next);
         res().then((result) => {
             const data = result.data;
-            setPost((prev) => {
-                return {
-                    ...prev,
-                    next: data.next.replace(process.env.REACT_APP_URL, ""),
-                    newPost: data.results[0],
-                    hotPost: data.results.slice(1, 3),
-                    posts: data.results.slice(3),
-                };
+            setNext((prev) =>
+                data.next?.replace(process.env.REACT_APP_URL, "")
+            );
+            setNewPost((prev) => {
+                return { ...prev, ...data.results[0] };
+            });
+            setHotPost((prev) => {
+                return data.results.slice(1, 3);
+            });
+
+            setPosts((prev) => {
+                return data.results.slice(3);
             });
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const loadMoreData = async () => {
-        if (post.next) {
-            const result = await postService.getPost(post.next);
-            setPost((prev) => {
-                return {
-                    ...prev,
-                    posts: [...prev.posts, ...result.data.results],
-                    next: result.data.next?.replace(
-                        process.env.REACT_APP_URL,
-                        ""
-                    ),
-                };
+        if (next) {
+            const result = await postService.getPost(next);
+            setPosts((prev) => {
+                return [...prev, ...result.data.results];
+            });
+
+            setNext((prev) => {
+                return result.data.next?.replace(process.env.REACT_APP_URL, "");
             });
         }
     };
 
     return (
         <div className={cls("post")}>
-            {post.newPost.id !== "" && <NewPost post={post.newPost} />}
-            <HotWrapper posts={post.hotPost} />
+            {newPost.id !== "" && <NewPost post={newPost} />}
+            <HotWrapper posts={hotPost} />
             <div className={cls("blog_post")}>
-                {post.posts.map((value, index) => {
+                {posts.map((value, index) => {
                     return <PostItem post={value} key={index} />;
                 })}
             </div>
-            <div className={cls("blog_page")}>
-                <div onClick={loadMoreData}>Load more posts</div>
-            </div>
+
+            {next === "" && (
+                <div className={cls("blog_page")}>
+                    <div onClick={loadMoreData}>Load more posts</div>
+                </div>
+            )}
         </div>
     );
-}
+};
 
 export default Post;

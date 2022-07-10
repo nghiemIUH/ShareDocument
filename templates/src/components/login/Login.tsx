@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const cls = classNames.bind(style);
 
-function Login() {
+const Login = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -70,6 +70,6 @@ function Login() {
             </div>
         </div>
     );
-}
+};
 
 export default Login;

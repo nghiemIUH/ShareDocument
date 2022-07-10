@@ -14,7 +14,7 @@ interface Props {
     categories: CategoryType[];
 }
 
-function Category({ categories }: Props) {
+const Category = ({ categories }: Props): JSX.Element => {
     return (
         <div className={cls("category")}>
             <div className={cls("title")}>
@@ -41,6 +41,6 @@ function Category({ categories }: Props) {
             </div>
         </div>
     );
-}
+};
 
 export default Category;

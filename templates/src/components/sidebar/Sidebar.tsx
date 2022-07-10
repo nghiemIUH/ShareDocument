@@ -8,7 +8,7 @@ import { useAppSelector } from "../../redux/hooks";
 
 const cls = classNames.bind(style);
 
-function Sidebar() {
+const Sidebar = (): JSX.Element => {
     const baseData = useAppSelector((state) => state.post);
 
     return (
@@ -18,6 +18,6 @@ function Sidebar() {
             <Tag tags={baseData.tags} />
         </div>
     );
-}
+};
 
 export default Sidebar;

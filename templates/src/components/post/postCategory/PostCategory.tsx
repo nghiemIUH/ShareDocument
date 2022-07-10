@@ -7,7 +7,7 @@ import classNames from "classnames/bind";
 
 const cls = classNames.bind(style);
 
-function PostCategory() {
+const PostCategory = (): JSX.Element => {
     const location = useLocation();
     const [posts, setPosts] = useState<PostType[]>([]);
 
@@ -26,7 +26,7 @@ function PostCategory() {
             })}
         </div>
     );
-}
+};
 
 interface PostType {
     id: string;

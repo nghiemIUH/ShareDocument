@@ -15,7 +15,7 @@ interface Props {
     posts: Post[];
 }
 
-function PopularPost({ posts }: Props) {
+const PopularPost = ({ posts }: Props): JSX.Element => {
     return (
         <div className={cls("popular_post")}>
             <div className={cls("title")}>
@@ -52,6 +52,6 @@ function PopularPost({ posts }: Props) {
             })}
         </div>
     );
-}
+};
 
 export default PopularPost;

@@ -245,7 +245,9 @@ CACHES = {
     }
 }
 APPEND_SLASH = False
+
 CACHE_TTL = 60 * 10
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
@@ -254,17 +256,13 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 3
+    'PAGE_SIZE': 10
 }
+
 OAUTH2_PROVIDER = {
     # send json data
     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
-    # this is the list of available scopes
-    # expire access token
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
+    # expire access token
     'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,
-    'REFRESH_TOKEN_EXPIRE_SECONDS': 30*24*60*60
 }
-CLIENT_ID = 'pr4Mb5hBF1DJT2jvysjMFAPwORtMxKnzTmGlK9xU'
-CLIENT_SECRET = 'kw69kxW8tgFnt0f61Fp1jTAn7QIJdSPFHHT2KTejjQZVMg6QGfhAbW9zXa7bTCMcvoXtcxDFtVGQ1oJUB4Dtj55o15byEWGVEj4Mhhs2gNIqN83zKx0liITbBHCGtINM'
-# password
