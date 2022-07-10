@@ -12,11 +12,13 @@ class TokenService {
     }
 
     setRefreshToken(token: string) {
+        console.log(process.env.REACT_APP_DOMAIN);
+
         Cookies.set("refresh_token", token, {
             path: "/",
             domain: process.env.REACT_APP_DOMAIN,
             expires: 365,
-            secure: true,
+            // secure: true,
         });
     }
 
@@ -24,7 +26,7 @@ class TokenService {
         Cookies.set("access_token", token, {
             path: "/",
             domain: process.env.REACT_APP_DOMAIN,
-            secure: true,
+            // secure: true,
         });
     }
 
