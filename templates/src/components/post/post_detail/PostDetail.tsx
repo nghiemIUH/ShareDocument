@@ -20,7 +20,7 @@ function unEscape(htmlStr: string) {
     return htmlStr;
 }
 
-function PostDetail() {
+const PostDetail = (): JSX.Element => {
     const location = useLocation();
     const [detail, setDetail] = useState<PostType>({
         id: "",
@@ -43,7 +43,6 @@ function PostDetail() {
         if (global.document && has(global.window, "FB")) {
             (global as any).FB.XFBML.parse();
         }
-        console.log(global.window.location.href);
     }, []);
 
     useEffect(() => {
@@ -82,6 +81,15 @@ function PostDetail() {
                         return <div key={index}>{value.name}</div>;
                     })}
                 </div>
+                <div
+                    className="fb-like"
+                    data-href={window.location.href}
+                    data-width=""
+                    data-layout="standard"
+                    data-action="like"
+                    data-size="small"
+                    data-share="true"
+                ></div>
             </div>
             <div className={cls("content")}>{parse(detail.content)}</div>
 
@@ -93,7 +101,7 @@ function PostDetail() {
             ></div>
         </div>
     );
-}
+};
 
 interface Auth {
     username: string;

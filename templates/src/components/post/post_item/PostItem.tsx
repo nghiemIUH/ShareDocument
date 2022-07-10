@@ -25,7 +25,7 @@ interface Props {
 
 const cls = classNames.bind(style);
 
-function PostItem({ post }: Props) {
+const PostItem = ({ post }: Props): JSX.Element => {
     return (
         <div className={cls("post_item")}>
             <div className={cls("post_image")}>
@@ -52,6 +52,6 @@ function PostItem({ post }: Props) {
             </div>
         </div>
     );
-}
+};
 
 export default memo(PostItem);

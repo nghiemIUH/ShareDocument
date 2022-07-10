@@ -9,7 +9,7 @@ import userAPI from "../../redux/user/userAPI";
 
 const cls = classNames.bind(style);
 
-function Header() {
+const Header = (): JSX.Element => {
     const userState = useAppSelector((state) => state.user);
     const [toggleUser, setToggleUser] = useState(false);
 
@@ -178,6 +178,6 @@ function Header() {
             )}
         </div>
     );
-}
+};
 
 export default memo(Header);
