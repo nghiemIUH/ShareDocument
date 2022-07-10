@@ -8,7 +8,7 @@
     box-sizing: border-box;
     padding: 0 20px;
     height: 70px;
-    z-index: 1000;
+    z-index: 1;
     position: relative;
 
     .header_toggle {
@@ -54,9 +54,9 @@
         background-color: #203656;
         box-sizing: border-box;
         visibility: hidden;
-        z-index: 1000;
         opacity: 0;
-        transition: all 0.17s ease;
+        display: none;
+        transition: none !important;
 
         @include responsive_min_768 {
             display: none !important;
@@ -171,7 +171,7 @@
                 height: 20px;
                 background-color: rgba(255, 255, 255, 0.05);
                 line-height: 70px;
-                z-index: 20;
+                z-index: 2;
                 color: #203656;
                 font-size: 16px;
                 font-weight: 400;
@@ -188,7 +188,7 @@
             height: 20px;
             background-color: rgba(255, 255, 255, 0.05);
             line-height: 70px;
-            z-index: 20;
+            z-index: 2;
             color: #203656;
             font-size: 16px;
             font-weight: 400;
@@ -267,7 +267,7 @@
                 box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
                 padding: 10px;
                 background-color: #fff;
-                z-index: 99999;
+                z-index: 2;
                 font-weight: 500;
                 opacity: 0;
                 visibility: hidden;

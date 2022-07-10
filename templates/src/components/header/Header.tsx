@@ -54,10 +54,12 @@ const Header = (): JSX.Element => {
                 style={
                     showToggle
                         ? {
+                              display: "block",
                               visibility: "visible",
                               opacity: 1,
+                              zIndex: 3,
                           }
-                        : {}
+                        : { zIndex: -1 }
                 }
             >
                 <div className={cls("mobile_menu")}>
