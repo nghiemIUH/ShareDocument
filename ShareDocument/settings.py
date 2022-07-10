@@ -147,7 +147,7 @@ USE_TZ = True
 AUTH_USER_MODEL = 'User.CustomUser'
 
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 # STATIC_ROOT = 'static/'
 
 STATICFILES_DIRS = [
