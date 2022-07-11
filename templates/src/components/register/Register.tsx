@@ -6,6 +6,8 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import authService from "../../services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Input from "../input/Input";
+import { isAllowSubmit } from "../input/validate";
 
 const cls = classNames.bind(style);
 
@@ -21,6 +23,19 @@ const Register = (): JSX.Element => {
 
     const handleRegister = async (e: FormEvent) => {
         e.preventDefault();
+        if (!isAllowSubmit()) {
+            toast.error("Vui lòng kiểm tra lại thông tin", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            return false;
+        }
+
         const formData = new FormData();
         formData.append("username", username);
         formData.append("password", password);
@@ -84,22 +99,31 @@ const Register = (): JSX.Element => {
                     </div>
                     <div className={cls("form_group")}>
                         <label htmlFor="">Tài khoản</label>
-                        <input
+                        <Input
                             type="text"
                             name="username"
+                            rule="required"
+                            id="username"
                             value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            onChange={(e: any) => {
+                                setUsername(e.target.value);
+                            }}
                         />
                     </div>
                     <div className={cls("form_password")}>
                         <label htmlFor="">Mật khẩu</label>
                         <div>
-                            <input
+                            <Input
                                 type={showPassword}
                                 name="password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e: any) =>
+                                    setPassword(e.target.value)
+                                }
+                                rule="required"
+                                id="password"
                             />
+
                             {showPassword === "password" ? (
                                 <AiFillEye
                                     onClick={() => setShowPassword("text")}
@@ -113,20 +137,24 @@ const Register = (): JSX.Element => {
                     </div>
                     <div className={cls("form_group")}>
                         <label htmlFor="">Họ tên</label>
-                        <input
+                        <Input
                             type="text"
                             name="fullName"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
+                            id="fullName"
+                            rule="required"
                         />
                     </div>
                     <div className={cls("form_group")}>
                         <label htmlFor="">Email</label>
-                        <input
+                        <Input
                             type="text"
                             name="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            id="email"
+                            rule="required|email"
                         />
                     </div>
                     <button type="submit">Đăng ký</button>
