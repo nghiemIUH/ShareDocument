@@ -12,6 +12,7 @@ import userAPI from "./redux/user/userAPI";
 import postAPI from "./redux/baseData/postAPI";
 import PostDetail from "./components/post/post_detail/PostDetail";
 import PostCategory from "./components/post/postCategory/PostCategory";
+import Register from "./components/register/Register";
 
 function App() {
     const userState = useAppSelector((state) => state.user);
@@ -48,6 +49,7 @@ function App() {
                     element={<ContentWrapper Component={<Post />} />}
                 />
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route
                     path="/post-detail/:slug"
                     element={<ContentWrapper Component={<PostDetail />} />}

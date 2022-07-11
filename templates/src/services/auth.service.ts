@@ -32,6 +32,14 @@ class AuthService {
             method: "get",
         });
     }
+
+    register(data: FormData) {
+        return axiosNotAuth({
+            url: "/user/register/",
+            method: "post",
+            data,
+        });
+    }
 }
 
 export default new AuthService();

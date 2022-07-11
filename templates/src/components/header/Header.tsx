@@ -122,8 +122,10 @@ const Header = (): JSX.Element => {
                     <div className={cls("header_account_avatar")}>
                         <img
                             src={
-                                process.env.REACT_APP_URL +
                                 userState.user.avatar
+                                    ? process.env.REACT_APP_URL +
+                                      userState.user.avatar
+                                    : "avatar-default-icon.png"
                             }
                             alt=""
                         />
