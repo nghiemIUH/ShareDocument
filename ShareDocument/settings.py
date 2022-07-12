@@ -30,7 +30,8 @@ SECRET_KEY = 'django-insecure-3q_-vyy%(t*v4)p=lbm^0mul$k3g#m9_zq+uq=c79i2%*ihtx!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['vndev.info', 'admin.deepcode.tk', '127.0.0.1']
+ALLOWED_HOSTS = ['vndev.info', 'admin.deepcode.tk',
+                 '127.0.0.1', 'admin.vndev.info']
 
 # Application definition
 
