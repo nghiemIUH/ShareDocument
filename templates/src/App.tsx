@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Header from "./components/header/Header";
-import Footer from "./components/footer/Footer";
 import ContentWrapper from "./components/content/ContentWrapper";
-import Post from "./components/post/Post";
-import Login from "./components/login/Login";
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import tokenService from "./services/token.service";
 import userAPI from "./redux/user/userAPI";
 import postAPI from "./redux/baseData/postAPI";
-import PostDetail from "./components/post/post_detail/PostDetail";
-import PostCategory from "./components/post/postCategory/PostCategory";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import PostDetailPage from "./pages/PostDetailPage";
+import PostCategoryPage from "./pages/PostCategoryPage";
 
 function App() {
     const userState = useAppSelector((state) => state.user);
@@ -41,23 +40,18 @@ function App() {
 
     return (
         <div className="App">
-            <Header />
             <Routes>
-                <Route
-                    path="/"
-                    element={<ContentWrapper Component={<Post />} />}
-                />
-                <Route path="/login" element={<Login />} />
-                <Route
-                    path="/post-detail/:slug"
-                    element={<ContentWrapper Component={<PostDetail />} />}
-                />
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/post-detail/:slug" element={<PostDetailPage />} />
                 <Route
                     path="/category/:slug"
-                    element={<ContentWrapper Component={<PostCategory />} />}
+                    element={
+                        <ContentWrapper Component={<PostCategoryPage />} />
+                    }
                 />
             </Routes>
-            <Footer />
         </div>
     );
 }
