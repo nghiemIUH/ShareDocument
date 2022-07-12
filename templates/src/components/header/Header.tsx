@@ -125,7 +125,7 @@ const Header = (): JSX.Element => {
                                 userState.user.avatar
                                     ? process.env.REACT_APP_URL +
                                       userState.user.avatar
-                                    : "avatar-default-icon.png"
+                                    : "/avatar-default-icon.png"
                             }
                             alt=""
                         />
