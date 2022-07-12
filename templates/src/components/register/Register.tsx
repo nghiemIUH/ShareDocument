@@ -23,7 +23,7 @@ const Register = (): JSX.Element => {
 
     const handleRegister = async (e: FormEvent) => {
         e.preventDefault();
-        if (!isAllowSubmit()) {
+        if (!isAllowSubmit("form_register")) {
             toast.error("Vui lòng kiểm tra lại thông tin", {
                 position: "top-center",
                 autoClose: 3000,
@@ -72,7 +72,7 @@ const Register = (): JSX.Element => {
                 pauseOnHover
             />
             <div className={cls("register")}>
-                <form action="" onSubmit={handleRegister}>
+                <form action="" onSubmit={handleRegister} id="form_register">
                     <div className={cls("form_avtar")}>
                         <img
                             src={

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import userAPI from "../../redux/user/userAPI";
 import { useNavigate } from "react-router-dom";
+import Input from "../input/Input";
+import { isAllowSubmit } from "../input/validate";
 
 const cls = classNames.bind(style);
 
@@ -19,13 +21,25 @@ const Login = (): JSX.Element => {
 
     const handleLogin = (e: FormEvent) => {
         e.preventDefault();
+        if (!isAllowSubmit("form_login")) {
+            return false;
+        }
         dispatch(userAPI.login()({ username, password }));
     };
 
     useEffect(() => {
         if (userState.is_login) {
             navigate("/");
+        } else {
+            if (userState.error) {
+                (
+                    document.getElementById("message_login") as HTMLDivElement
+                ).innerHTML = "Tài khoản hoặc mật khẩu sai";
+            } else {
+                //
+            }
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userState]);
 
@@ -38,23 +52,28 @@ const Login = (): JSX.Element => {
                         <Link to="/register">Đăng ký</Link>
                     </div>
                 </div>
-                <form action="" onSubmit={handleLogin}>
+                <div id="message_login" className={cls("message_login")}></div>
+                <form action="" onSubmit={handleLogin} id="form_login">
                     <div className={cls("form_group")}>
                         <label htmlFor="">Tài khoản</label>
-                        <input
+                        <Input
                             type="text"
                             name="username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                            rule="required"
+                            id="username"
                         />
                     </div>
                     <div className={cls("form_group")}>
                         <label htmlFor="">Mật khẩu</label>
-                        <input
+                        <Input
                             type="password"
                             name="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            rule="required"
+                            id="password"
                         />
                     </div>
                     <button type="submit">Đăng nhập</button>

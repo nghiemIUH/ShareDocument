@@ -34,8 +34,10 @@ const validate = (input_element) => {
     return message === "";
 };
 
-const isAllowSubmit = () => {
-    const input_element = document.querySelectorAll("input[name][value]");
+const isAllowSubmit = (form_id) => {
+    const input_element = document.querySelectorAll(
+        "#" + form_id + " input[name][value]"
+    );
     const result = [];
     for (let e of input_element) {
         result.push(validate(e));
