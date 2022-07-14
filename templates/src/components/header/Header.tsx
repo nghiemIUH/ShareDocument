@@ -46,7 +46,9 @@ const Header = (): JSX.Element => {
                 onClick={() => setShowToggle((prev) => !prev)}
             ></div>
             <div className={cls("header_logo")}>
-                Hello <span>.</span> Dev
+                <Link to="/">
+                    <img src="/logo1.png" alt="" width="90px" />
+                </Link>
             </div>
 
             <div

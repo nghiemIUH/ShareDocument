@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-import ContentWrapper from "./components/content/ContentWrapper";
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import tokenService from "./services/token.service";
 import userAPI from "./redux/user/userAPI";
@@ -11,6 +10,9 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import PostCategoryPage from "./pages/PostCategoryPage";
+import DocumentPage from "./pages/DocumentPage";
+import NotFound from "./pages/NotFound";
+import DocumentDetailPage from "./pages/DocumentDetailPage";
 
 function App() {
     const userState = useAppSelector((state) => state.user);
@@ -45,12 +47,10 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/post-detail/:slug" element={<PostDetailPage />} />
-                <Route
-                    path="/category/:slug"
-                    element={
-                        <ContentWrapper Component={<PostCategoryPage />} />
-                    }
-                />
+                <Route path="/category/:slug" element={<PostCategoryPage />} />
+                <Route path="/document" element={<DocumentPage />} />
+                <Route path="/detail/:slug" element={<DocumentDetailPage />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </div>
     );
