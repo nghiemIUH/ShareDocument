@@ -8,10 +8,15 @@
     margin-right: 10px;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-        rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    border: 1px solid gray;
     justify-content: space-between;
+
+    transition: transform 0.3s;
+
+    &:hover {
+        transform: scale3d(1.05, 1.05, 1);
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
 
     @include responsive_max_600 {
         width: 30%;

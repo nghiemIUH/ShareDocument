@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import classNames from "classnames/bind";
 import style from "./Document.module.scss";
 import { BiSearch } from "react-icons/bi";
@@ -32,9 +32,7 @@ const Document = () => {
         };
         res().then(async (result) => {
             setCategories((prev) => result.data);
-            const response_document = await documentService.getDocument(
-                "/document/get-document/" + result.data[0].title + "/"
-            );
+            const response_document = await documentService.getAll();
             setDocuments((prev) => {
                 return {
                     next: response_document.data.next?.replace(
@@ -48,9 +46,13 @@ const Document = () => {
     }, []);
 
     const handleChangeCategory = async (e: ChangeEvent<HTMLSelectElement>) => {
-        const response_document = await documentService.getDocument(
-            "/document/get-document/" + e.target.value + "/"
-        );
+        const response_document =
+            e.target.value === "All"
+                ? await documentService.getAll()
+                : await documentService.getDocument(
+                      "/document/get-document/" + e.target.value + "/"
+                  );
+
         setDocuments((prev) => {
             return {
                 next: response_document.data.next?.replace(
@@ -80,6 +82,22 @@ const Document = () => {
         });
     };
 
+    const handleSearch = async (e: FormEvent) => {
+        e.preventDefault();
+        const keyword = (document.getElementById("search") as HTMLInputElement)
+            .value;
+        const category = (
+            document.getElementById("category_select") as HTMLSelectElement
+        ).value;
+        const result = await documentService.search(keyword, category);
+        setDocuments((prev) => {
+            return {
+                next: result.data.next?.replace(process.env.REACT_APP_URL, ""),
+                documents: [...result.data.results],
+            };
+        });
+    };
+
     return (
         <div className={cls("document")}>
             <div className={cls("document_img")}>
@@ -88,10 +106,11 @@ const Document = () => {
             <div className={cls("document_filter")}>
                 <select
                     name=""
-                    id=""
+                    id="category_select"
                     className={cls("document_select")}
                     onChange={handleChangeCategory}
                 >
+                    <option value="All">All</option>
                     {categories.map((value, index) => {
                         return (
                             <option value={value.title} key={index}>
@@ -100,11 +119,20 @@ const Document = () => {
                         );
                     })}
                 </select>
-                <div className={cls("document_search")}>
-                    <input type="text" placeholder="Tìm kiếm..." />
-                    <BiSearch />
-                </div>
+                <form
+                    action=""
+                    className={cls("document_search")}
+                    onSubmit={handleSearch}
+                >
+                    <input type="text" placeholder="Tìm kiếm..." id="search" />
+                    <button type="submit">
+                        <BiSearch />
+                    </button>
+                </form>
             </div>
+            {documents.documents.length === 0 && (
+                <div style={{ marginTop: 20 }}>Không tìm thấy</div>
+            )}
             <div className={cls("document_items")}>
                 {documents.documents?.map((value, index) => {
                     return <DocumentItem {...value} key={index} />;
