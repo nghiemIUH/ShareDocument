@@ -1,6 +1,6 @@
 import datetime
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -18,13 +18,15 @@ class Document(models.Model):
     date = models.DateField(default=datetime.datetime.now)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to='document_file/%Y/%m/%d')
-    num_download = models.IntegerField(default=0)
-    price = models.IntegerField(default=0)
+    review_img = models.FileField(
+        upload_to='document/%Y/%m/%d/review', default='logo1.png')
+    view = models.IntegerField(default=0)
+    slug = models.SlugField(default='slug', blank=True, max_length=255)
 
     def __str__(self) -> str:
         return self.title
 
-
-class DocumentUser(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    document = models.ManyToManyField(Document)
+    def save(self, *args, **kwargs) -> None:
+        self.slug = slugify(self.title)+'-' + \
+            datetime.datetime.strftime(self.date, '%d-%m-%Y')
+        return super().save(*args, **kwargs)

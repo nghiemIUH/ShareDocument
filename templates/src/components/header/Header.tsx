@@ -1,9 +1,8 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, FormEvent } from "react";
 import style from "./Header.module.scss";
 import classNames from "classnames/bind";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
-import { GiCancel } from "react-icons/gi";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import userAPI from "../../redux/user/userAPI";
 
@@ -12,11 +11,9 @@ const cls = classNames.bind(style);
 const Header = (): JSX.Element => {
     const userState = useAppSelector((state) => state.user);
     const [toggleUser, setToggleUser] = useState(false);
-
-    const [showSearch, setShowSearch] = useState(false);
     const [showToggle, setShowToggle] = useState(false);
-
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const closeToggleUser = (event: Event) => {
@@ -38,6 +35,11 @@ const Header = (): JSX.Element => {
     const handleLogout = () => {
         dispatch(userAPI.logout()());
     };
+    const handleSearch = (e: FormEvent) => {
+        e.preventDefault();
+        const keyword = ((e.target as any)[0] as HTMLInputElement).value;
+        navigate("/search?keyword=" + keyword);
+    };
 
     return (
         <div className={cls("header")}>
@@ -46,7 +48,9 @@ const Header = (): JSX.Element => {
                 onClick={() => setShowToggle((prev) => !prev)}
             ></div>
             <div className={cls("header_logo")}>
-                Hello <span>.</span> Dev
+                <Link to="/">
+                    <img src="/logo1.png" alt="" width="90px" />
+                </Link>
             </div>
 
             <div
@@ -84,6 +88,17 @@ const Header = (): JSX.Element => {
                                 </li>
                             </>
                         )}
+                        <li className={cls("search")}>
+                            <form action="">
+                                <input
+                                    type="text"
+                                    placeholder="Search this blog..."
+                                />
+                                <button type="submit">
+                                    <BiSearch />
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -101,22 +116,15 @@ const Header = (): JSX.Element => {
                     </li>
                 </ul>
             </div>
-            <div
-                className={cls("header_search")}
-                style={
-                    showSearch
-                        ? { opacity: 1, visibility: "visible" }
-                        : { opacity: 0, visibility: "hidden" }
-                }
-            >
-                <form action="">
+            <div className={cls("header_search")}>
+                <form action="" onSubmit={handleSearch}>
                     <input type="text" placeholder="Search this blog..." />
-                    <GiCancel onClick={() => setShowSearch(false)} />
+                    <button type="submit">
+                        <BiSearch />
+                    </button>
                 </form>
             </div>
-            <div className={cls("btn_search")}>
-                <BiSearch onClick={() => setShowSearch(true)} />
-            </div>
+
             {userState.is_login ? (
                 <div className={cls("header_account_loged")}>
                     <div className={cls("header_account_avatar")}>

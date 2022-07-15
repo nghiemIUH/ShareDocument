@@ -17,6 +17,7 @@ urlpatterns = [
     path('get-all-category/', views.getAllCategory),
     path('get-post/', views.PostView.as_view()),
     path('post-detail/<slug:slug>/', views.getDetail),
-    path('category/<str:category_name>/', views.getPostCategory)
+    path('category/<str:category_name>/', views.getPostCategory),
+    path('search/', views.SearchPost.as_view())
 
 ]

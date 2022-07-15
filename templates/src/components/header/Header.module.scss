@@ -90,6 +90,37 @@
                         background-color: rgba($color: #203656, $alpha: 0.3);
                     }
                 }
+                .search {
+                    form {
+                        width: 50%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        input {
+                            width: 100%;
+                            height: 100%;
+                            background-color: #203656;
+                            border: none;
+                            border-bottom: 1px solid #fff;
+                            color: #fff;
+                            padding: 5px;
+                            font-size: 13px;
+                            margin-right: 5px;
+                            &:focus {
+                                outline: none;
+                            }
+                        }
+                        button {
+                            border: none;
+                            background-color: #203656;
+                            cursor: pointer;
+                            svg {
+                                font-size: 18px;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -125,33 +156,33 @@
         }
     }
     .header_search {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 70px;
-        z-index: 99;
+        height: 50%;
         background-color: #ffffff;
         box-sizing: border-box;
-        padding: 0 20px;
         transition: all 0.17s linear;
+        border: 1px solid #aaa;
+        border-radius: 20px;
+        padding: 3px 5px;
+
+        @include responsive_max_600 {
+            display: none;
+        }
 
         form {
             width: 100%;
-            height: 70px;
+            height: 100%;
             background-color: rgba(0, 0, 0, 0);
-            line-height: 70px;
             overflow: hidden;
             padding: 0;
             position: relative;
+            display: flex;
+            align-items: center;
 
             input {
                 width: 100%;
-                height: 70px;
                 font-family: inherit;
                 color: #203656;
                 margin: 0;
-                padding: 0 58px 0 0;
                 background-color: rgba(0, 0, 0, 0);
                 font-size: 13px;
                 font-weight: 400;
@@ -162,22 +193,25 @@
                     outline: none;
                 }
             }
-            svg {
-                position: absolute;
-                top: 23px;
-                right: 0;
-                display: block;
-                width: 20px;
-                height: 20px;
-                background-color: rgba(255, 255, 255, 0.05);
-                line-height: 70px;
-                z-index: 2;
-                color: #203656;
-                font-size: 16px;
-                font-weight: 400;
-                text-align: center;
-                cursor: pointer;
-                transition: color 0.17s ease;
+
+            button {
+                border: none;
+                background-color: #fff;
+                display: flex;
+                align-items: center;
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    background-color: rgba(255, 255, 255, 0.05);
+                    line-height: 70px;
+                    z-index: 2;
+                    color: #203656;
+                    font-size: 16px;
+                    font-weight: 400;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: color 0.17s ease;
+                }
             }
         }
     }

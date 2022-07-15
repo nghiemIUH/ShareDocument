@@ -4,6 +4,7 @@
     position: relative;
     box-sizing: border-box;
     width: 90%;
+    min-height: 100vh;
 
     @include responsive_max_600 {
         margin: 10px auto 0 !important;
