@@ -72,6 +72,21 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
+X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    'X-Frame-Options'
+]
+
 ROOT_URLCONF = 'ShareDocument.urls'
 
 TEMPLATES = [

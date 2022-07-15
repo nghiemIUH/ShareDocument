@@ -44,7 +44,7 @@ const DocumentDetail = () => {
                 <div style={{ height: "80vh" }}>
                     <Viewer
                         // fileUrl={process.env.REACT_APP_URL + document.file}
-                        fileUrl="http://localhost:8000/media/document_file/2022/07/14/Programming_with_Python_-_T.R._Padmanabhan.pdf"
+                        fileUrl="http://vndev.info/media/document_file/2022/07/14/Programming_with_Python_-_T.R._Padmanabhan.pdf"
                     />
                 </div>
             </Worker>
