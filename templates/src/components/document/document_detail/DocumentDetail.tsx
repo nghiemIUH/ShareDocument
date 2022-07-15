@@ -43,7 +43,8 @@ const DocumentDetail = () => {
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.12.313/build/pdf.worker.min.js">
                 <div style={{ height: "80vh" }}>
                     <Viewer
-                        fileUrl={process.env.REACT_APP_URL + document.file}
+                        // fileUrl={process.env.REACT_APP_URL + document.file}
+                        fileUrl="http://vndev.info/media/document_file/2022/07/14/Programming_with_Python_-_T.R._Padmanabhan.pdf"
                     />
                 </div>
             </Worker>

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@pdftron/webviewer": "^8.6.1",
     "@react-pdf-viewer/core": "^3.6.0",
     "@react-pdf-viewer/default-layout": "^3.6.0",
     "@react-pdf-viewer/toolbar": "^3.6.0",
@@ -21,6 +20,7 @@
     "html-react-parser": "^3.0.0",
     "js-cookie": "^3.0.1",
     "lodash": "^4.17.21",
+    "pspdfkit": "^2022.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
@@ -59,7 +59,6 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.2",
-    "@types/lodash": "^4.14.182",
-    "@types/react-pdf": "^5.7.2"
+    "@types/lodash": "^4.14.182"
   }
 }
