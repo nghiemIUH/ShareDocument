@@ -12,8 +12,6 @@ class TokenService {
     }
 
     setRefreshToken(token: string) {
-        console.log(process.env.REACT_APP_DOMAIN);
-
         Cookies.set("refresh_token", token, {
             path: "/",
             domain: process.env.REACT_APP_DOMAIN,
