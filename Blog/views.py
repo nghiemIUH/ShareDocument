@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.pagination import LimitOffsetPagination
 from django.views.decorators.cache import cache_page
 from django.conf import settings
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 
 CACHE_TTL = settings.CACHE_TTL
 
@@ -74,3 +75,22 @@ def getPostCategory(request, category_name):
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
     return Response(data=posts_se.data, status=status.HTTP_200_OK)
+
+
+class SearchPost(APIView, LimitOffsetPagination):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        try:
+            keyword = request.GET.get('keyword')
+            search_vector = SearchVector(
+                'title') + SearchVector('content')
+            search_query = SearchQuery(keyword)
+            posts = models.Post.objects.annotate(
+                rank=SearchRank(search_vector, search_query))  # .filter(rank__gte=0.3).order_by('-rank')
+
+            result = self.paginate_queryset(posts, request, view=self)
+            post_se = serializers.PostSerialize(result, many=True)
+            return self.get_paginated_response(post_se.data)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

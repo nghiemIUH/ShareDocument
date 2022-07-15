@@ -42,6 +42,12 @@ class PostService {
             method: "get",
         });
     }
+    search(url: string) {
+        return axiosNotAuth({
+            url,
+            method: "get",
+        });
+    }
 }
 
 export default new PostService();
