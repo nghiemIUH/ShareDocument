@@ -109,7 +109,7 @@ const Header = (): JSX.Element => {
                         <Link to="/">Trang chủ</Link>
                     </li>
                     <li>
-                        <Link to="/document">tài liệu</Link>
+                        <Link to="/document">Tài liệu</Link>
                     </li>
                     <li>
                         <Link to="/qa">Hỏi đáp</Link>

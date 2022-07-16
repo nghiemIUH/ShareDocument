@@ -13,12 +13,6 @@ class DocumentService {
             method: "get",
         });
     }
-    getDocumentDetail(url: string) {
-        return axiosNotAuth({
-            url,
-            method: "get",
-        });
-    }
 
     getAll() {
         return axiosNotAuth({

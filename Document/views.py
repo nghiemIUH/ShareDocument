@@ -76,14 +76,3 @@ class SearchDocument(APIView, CustomPagination):
             return self.get_paginated_response(document_se.data)
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def getDocumentDeatil(request, slug):
-    try:
-        document = models.Document.objects.get(slug=slug)
-        document_se = serializers.DocumentDetailSerialize(document)
-        return Response(data=document_se.data, status=status.HTTP_200_OK)
-    except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)

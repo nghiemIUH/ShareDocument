@@ -12,7 +12,6 @@ import PostDetailPage from "./pages/PostDetailPage";
 import PostCategoryPage from "./pages/PostCategoryPage";
 import DocumentPage from "./pages/DocumentPage";
 import NotFound from "./pages/NotFound";
-import DocumentDetailPage from "./pages/DocumentDetailPage";
 import SearchResultPage from "./pages/SearchResultPage";
 
 function App() {
@@ -50,7 +49,6 @@ function App() {
                 <Route path="/post-detail/:slug" element={<PostDetailPage />} />
                 <Route path="/category/:slug" element={<PostCategoryPage />} />
                 <Route path="/document" element={<DocumentPage />} />
-                <Route path="/detail/:slug" element={<DocumentDetailPage />} />
                 <Route path="/search" element={<SearchResultPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

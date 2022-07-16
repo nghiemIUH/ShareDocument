@@ -14,6 +14,7 @@ interface DocumentType {
     review_img: string;
     view: number;
     slug: string;
+    file: string;
 }
 
 const Document = () => {
