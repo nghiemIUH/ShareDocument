@@ -1,7 +1,6 @@
 import React from "react";
 import style from "./DocumentItem.module.scss";
 import classNames from "classnames/bind";
-import { Link } from "react-router-dom";
 
 const cls = classNames.bind(style);
 
@@ -11,18 +10,19 @@ interface Props {
     view: number;
     review_img: string;
     slug: string;
+    file: string;
 }
 
-const DocumentItem = ({ title, date, view, review_img, slug }: Props) => {
+const DocumentItem = ({ title, date, view, review_img, slug, file }: Props) => {
     return (
         <div className={cls("document_item")}>
-            <Link to={"/detail/" + slug}>
+            <a href={process.env.REACT_APP_URL + file}>
                 <img src={process.env.REACT_APP_URL + review_img} alt="" />
-            </Link>
+            </a>
             <div className={cls("document_content")}>
-                <Link to={"/detail/" + slug}>
+                <a href={process.env.REACT_APP_URL + file}>
                     <h4>{title}</h4>
-                </Link>
+                </a>
                 <div className={cls("meta")}>
                     <div className={cls("date")}>
                         <span></span>

@@ -11,10 +11,4 @@ class CategorySerialize(serializers.ModelSerializer):
 class DocumentSerialize(serializers.ModelSerializer):
     class Meta:
         model = models.Document
-        fields = ['id', 'review_img', 'slug', 'title', 'date', 'view']
-
-
-class DocumentDetailSerialize(serializers.ModelSerializer):
-    class Meta:
-        model = models.Document
         fields = '__all__'
