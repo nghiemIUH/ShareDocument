@@ -1,15 +1,34 @@
-import React from "react";
+import { memo, useState, useEffect } from "react";
 import style from "./ForumItem.module.scss";
 import classNames from "classnames/bind";
 import ImageGrid from "./imageGrid/ImageGrid";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import Comment from "./comment/Comment";
 import parse from "html-react-parser";
+import forumService from "../../../services/forum.service";
 
 const cls = classNames.bind(style);
 
 const ForumItem = (props: Props) => {
+    const [showComment, setShowComment] = useState(false);
+    const [isLike, setIsLike] = useState(false);
+
+    useEffect(() => {
+        const res = async () => {
+            return await forumService.getLike(props.id);
+        };
+        res().then((result) => {
+            setIsLike(result.data.isLike);
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleLike = async () => {
+        const result = await forumService.handleLike(props.id);
+        setIsLike(result.data.isLike);
+    };
+
     return (
         <div className={cls("forum_item")}>
             <div className={cls("header")}>
@@ -36,18 +55,26 @@ const ForumItem = (props: Props) => {
             </div>
             <div className={cls("footer")}>
                 <div className={cls("like")}>
-                    <AiOutlineHeart />
+                    {isLike ? (
+                        <AiFillHeart
+                            style={{ color: "red" }}
+                            onClick={handleLike}
+                        />
+                    ) : (
+                        <AiOutlineHeart onClick={handleLike} />
+                    )}
                 </div>
                 <div className={cls("Comment")}>
-                    <FaRegComment />
+                    <FaRegComment onClick={() => setShowComment(true)} />
                 </div>
             </div>
-            <Comment />
+            {showComment && <Comment post_id={props.id} />}
         </div>
     );
 };
 
 interface Props {
+    id: string;
     auth: {
         username: string;
         avatar: string;
@@ -59,4 +86,4 @@ interface Props {
     }[];
 }
 
-export default React.memo(ForumItem);
+export default memo(ForumItem);

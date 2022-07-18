@@ -14,5 +14,42 @@ class ForumService {
             data,
         });
     }
+
+    getComment(url: string, post_id: string) {
+        return axiosAuth({
+            url,
+            method: "get",
+            params: { post_id: post_id },
+        });
+    }
+
+    uploadComment(content: string, post_id: string) {
+        return axiosAuth({
+            url: "/forum/comment/",
+            method: "post",
+            data: {
+                content: content,
+                post_id: post_id,
+            },
+        });
+    }
+    getLike(post_id: string) {
+        return axiosAuth({
+            url: "/forum/like/",
+            method: "get",
+            params: {
+                post_id,
+            },
+        });
+    }
+    handleLike(post_id: string) {
+        return axiosAuth({
+            url: "/forum/like/",
+            method: "post",
+            data: {
+                post_id,
+            },
+        });
+    }
 }
 export default new ForumService();

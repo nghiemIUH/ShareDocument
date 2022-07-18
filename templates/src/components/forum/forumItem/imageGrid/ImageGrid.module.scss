@@ -24,10 +24,10 @@
         grid-gap: 5px;
         .grid_item_1 {
             grid-column-start: 1;
-            grid-column-end: 4;
+            grid-column-end: 5;
         }
         .grid_item_2 {
-            grid-column-start: 4;
+            grid-column-start: 5;
             grid-column-end: 9;
         }
     }
@@ -35,21 +35,21 @@
     .grid3 {
         .grid_item_1 {
             grid-column-start: 1;
-            grid-column-end: 4;
+            grid-column-end: 5;
             grid-row-start: 1;
-            grid-row-end: 4;
+            grid-row-end: 5;
         }
         .grid_item_2 {
-            grid-column-start: 4;
+            grid-column-start: 5;
             grid-column-end: 9;
             grid-row-start: 1;
-            grid-row-end: 4;
+            grid-row-end: 5;
         }
         .grid_item_3 {
             grid-column-start: 1;
             grid-column-end: 9;
-            grid-row-start: 4;
-            grid-row-end: 8;
+            grid-row-start: 5;
+            grid-row-end: 9;
         }
     }
     .grid4 {

@@ -15,3 +15,6 @@ class CommentAdminInline(admin.StackedInline):
 @admin.register(models.Post)
 class PostAdmin(admin.ModelAdmin):
     inlines = [PostMediaAdminInline, CommentAdminInline]
+
+
+admin.site.register(models.Like)

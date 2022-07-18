@@ -39,4 +39,4 @@ class Comment(models.Model):
     auth = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField()
-    date = models.DateField(default=datetime.now)
+    date = models.DateTimeField(default=timezone.now)

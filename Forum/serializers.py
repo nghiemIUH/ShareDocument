@@ -16,3 +16,17 @@ class PostSerialize(serializers.ModelSerializer):
     class Meta:
         model = models.Post
         fields = '__all__'
+
+
+class CommentSerialize(serializers.ModelSerializer):
+    auth = UserSerializer()
+
+    class Meta:
+        model = models.Comment
+        fields = '__all__'
+
+
+class LikeSerialize(serializers.ModelSerializer):
+    class Meta:
+        model = models.Like
+        fields = '__all__'
