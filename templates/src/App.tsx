@@ -13,6 +13,7 @@ import PostCategoryPage from "./pages/PostCategoryPage";
 import DocumentPage from "./pages/DocumentPage";
 import NotFound from "./pages/NotFound";
 import SearchResultPage from "./pages/SearchResultPage";
+import ForumPage from "./pages/ForumPage";
 
 function App() {
     const userState = useAppSelector((state) => state.user);
@@ -50,6 +51,7 @@ function App() {
                 <Route path="/category/:slug" element={<PostCategoryPage />} />
                 <Route path="/document" element={<DocumentPage />} />
                 <Route path="/search" element={<SearchResultPage />} />
+                <Route path="/forum" element={<ForumPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </div>

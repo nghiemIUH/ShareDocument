@@ -1,0 +1,28 @@
+.forum {
+    width: 70%;
+    margin: 0 auto;
+
+    .writting {
+        display: flex;
+        margin-bottom: 20px;
+        align-items: center;
+
+        img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        div {
+            color: #aaa;
+            background-color: #f0f2f5;
+            font-size: 15px;
+            padding: 10px;
+            margin-left: 10px;
+            border-radius: 20px;
+            width: 100%;
+            cursor: pointer;
+        }
+    }
+}

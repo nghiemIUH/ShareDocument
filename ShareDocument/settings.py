@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     "django.contrib.postgres",
+    "corsheaders",
     'ckeditor',
     'ckeditor_uploader',
     'User',
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
     'Document',
     'oauth2_provider',
     'rest_framework',
-    "corsheaders",
+    'Forum'
 ]
 SITE_ID = 1
 
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True

@@ -76,7 +76,7 @@ const Header = (): JSX.Element => {
                             <Link to="/document">Tài liệu</Link>
                         </li>
                         <li onClick={() => setShowToggle(false)}>
-                            <Link to="/qa">Hỏi đáp</Link>
+                            <Link to="/forum">Diễn đàn</Link>
                         </li>
                         {!userState.is_login && (
                             <>
@@ -89,7 +89,7 @@ const Header = (): JSX.Element => {
                             </>
                         )}
                         <li className={cls("search")}>
-                            <form action="">
+                            <form action="" onSubmit={handleSearch}>
                                 <input
                                     type="text"
                                     placeholder="Search this blog..."
@@ -112,7 +112,7 @@ const Header = (): JSX.Element => {
                         <Link to="/document">Tài liệu</Link>
                     </li>
                     <li>
-                        <Link to="/qa">Hỏi đáp</Link>
+                        <Link to="/forum">Diễn đàn</Link>
                     </li>
                 </ul>
             </div>

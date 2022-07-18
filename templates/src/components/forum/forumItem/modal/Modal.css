@@ -1,0 +1,7 @@
+.slick-slider {
+    width: 70%;
+}
+.slick-track {
+    display: flex;
+    align-items: center;
+}
