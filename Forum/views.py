@@ -52,17 +52,17 @@ class CommentView(APIView, PaginationCustomPost):
         return self.get_paginated_response(comments_se.data)
 
     def post(self, request):
-        # try:
-        auth = request.user
-        content = request.data['content']
-        post_id = request.data['post_id']
-        post = models.Post.objects.get(pk=post_id)
-        comment = models.Comment.objects.create(
-            auth=auth, content=content, post=post)
-        comment_se = serializers.CommentSerialize(comment)
-        return Response(data=comment_se.data, status=status.HTTP_200_OK)
-        # except:
-        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+        try:
+            auth = request.user
+            content = request.data['content']
+            post_id = request.data['post_id']
+            post = models.Post.objects.get(pk=post_id)
+            comment = models.Comment.objects.create(
+                auth=auth, content=content, post=post)
+            comment_se = serializers.CommentSerialize(comment)
+            return Response(data=comment_se.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class LikeView(APIView):
@@ -83,3 +83,24 @@ class LikeView(APIView):
         except:
             models.Like.objects.create(auth=request.user, post=post)
             return Response(data={"isLike": True}, status=status.HTTP_200_OK)
+
+
+class GetPostIDView(APIView):
+    def get(self, request):
+        try:
+            post = models.Post.objects.get(pk=request.GET['id'])
+            post_se = serializers.PostSerialize(post)
+            return Response(data=post_se.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetNotificationView(APIView):
+    def get(self, request):
+        try:
+            note = models.Notification.objects.filter(
+                user=request.user).order_by('-createAt')
+            note_se = serializers.NotificationSerialize(note[:10], many=True)
+            return Response(data=note_se.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

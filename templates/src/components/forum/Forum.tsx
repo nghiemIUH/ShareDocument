@@ -55,6 +55,7 @@ const Forum = () => {
 interface Post {
     id: string;
     auth: {
+        id: string;
         username: string;
         avatar: string;
     };

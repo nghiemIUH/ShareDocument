@@ -18,3 +18,4 @@ class PostAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Like)
+admin.site.register(models.Notification)

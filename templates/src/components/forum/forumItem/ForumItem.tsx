@@ -3,7 +3,6 @@ import style from "./ForumItem.module.scss";
 import classNames from "classnames/bind";
 import ImageGrid from "./imageGrid/ImageGrid";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-// import { FaRegComment } from "react-icons/fa";
 import { GoComment } from "react-icons/go";
 import Comment from "./comment/Comment";
 import parse from "html-react-parser";
@@ -71,7 +70,9 @@ const ForumItem = (props: Props) => {
                     />
                 </div>
             </div>
-            {showComment && <Comment post_id={props.id} />}
+            {showComment && (
+                <Comment post_id={props.id} username={props.auth.username} />
+            )}
         </div>
     );
 };
@@ -79,6 +80,7 @@ const ForumItem = (props: Props) => {
 interface Props {
     id: string;
     auth: {
+        id: string;
         username: string;
         avatar: string;
     };

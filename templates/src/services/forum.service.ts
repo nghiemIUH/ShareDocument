@@ -7,6 +7,17 @@ class ForumService {
             method: "get",
         });
     }
+
+    getPostWithID(id: string) {
+        return axiosAuth({
+            url: "/forum/get-post/",
+            method: "get",
+            params: {
+                id,
+            },
+        });
+    }
+
     uploadPost(data: FormData) {
         return axiosAuth({
             url: "/forum/post/",
@@ -49,6 +60,12 @@ class ForumService {
             data: {
                 post_id,
             },
+        });
+    }
+    getNotification() {
+        return axiosAuth({
+            url: "/forum/get-note/",
+            method: "get",
         });
     }
 }

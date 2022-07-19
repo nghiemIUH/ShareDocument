@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, FormEvent } from "react";
+import { useState, useEffect, memo, FormEvent, useRef } from "react";
 import style from "./Comment.module.scss";
 import classNames from "classnames/bind";
 import { useAppSelector } from "../../../../redux/hooks";
@@ -8,10 +8,18 @@ import "react-toastify/dist/ReactToastify.css";
 
 const cls = classNames.bind(style);
 
-const Comment = ({ post_id }: { post_id: string }) => {
+const Comment = ({
+    post_id,
+    username,
+}: {
+    post_id: string;
+    username: string;
+}) => {
     const user = useAppSelector((state) => state.user);
     const [comments, setComments] = useState<CommentType[]>([]);
     const [next, setNext] = useState<string | null>("/forum/comment/");
+    const socket = useRef<WebSocket | null>(null);
+
     useEffect(() => {
         const res = async () => {
             return await forumService.getComment(next as string, post_id);
@@ -37,6 +45,21 @@ const Comment = ({ post_id }: { post_id: string }) => {
 
         const result = await forumService.uploadComment(content.value, post_id);
         if (result.status === 200) {
+            console.log("socket send");
+            (socket.current as WebSocket).send(
+                JSON.stringify({
+                    auth: {
+                        username: user.user.username,
+                        avatar: user.user.avatar,
+                    }, //other user
+                    username: username,
+                    content: content.value,
+                    url: "/forum/" + post_id,
+                    description:
+                        user.user.username +
+                        " đã bình luận về bài viết của bạn",
+                })
+            );
             content.value = "";
             setComments((prev) => {
                 return [...prev, result.data];
@@ -53,6 +76,29 @@ const Comment = ({ post_id }: { post_id: string }) => {
             });
         }
     };
+
+    useEffect(() => {
+        socket.current = new WebSocket(
+            "ws://" +
+                process.env.REACT_APP_URL?.replace(
+                    window.location.protocol + "//",
+                    ""
+                ) +
+                "/forum/note/" +
+                username +
+                "/"
+        );
+
+        (socket.current as WebSocket).onmessage = (e) => {
+            const data = JSON.parse(e.data).comment;
+            if (user.user.username !== data.auth.username) {
+                setComments((prev) => [...prev, data]);
+            }
+        };
+
+        return () => (socket.current as WebSocket).close();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={cls("comment")}>
@@ -107,14 +153,14 @@ const Comment = ({ post_id }: { post_id: string }) => {
 };
 
 interface CommentType {
-    id: string;
-    post: string;
+    id?: string;
+    post?: string;
     auth: {
         username: string;
         avatar: string;
     };
     content: string;
-    date: string;
+    date?: string;
 }
 
 export default memo(Comment);

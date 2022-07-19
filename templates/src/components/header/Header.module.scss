@@ -265,6 +265,80 @@
     .header_account_loged {
         display: flex;
         align-items: center;
+
+        .note {
+            margin-right: 10px;
+            position: relative;
+            cursor: pointer;
+            .note_count {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: -3px;
+                right: -3px;
+                width: 15px;
+                height: 15px;
+                font-size: 13px;
+                color: #fff;
+                font-weight: 600;
+                padding: 3px;
+                border-radius: 50%;
+                background-color: red;
+            }
+            .note_expand {
+                z-index: 2;
+                background-color: #fff;
+                width: 300px;
+                position: absolute;
+                padding: 10px;
+                right: -100px;
+                top: 35px;
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+                    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+                    rgba(0, 0, 0, 0.12) 0px 4px 6px,
+                    rgba(0, 0, 0, 0.17) 0px 12px 13px,
+                    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+                border-radius: 10px;
+                .note_item {
+                    padding: 10px 5px;
+                    border-radius: 5px;
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.1);
+                    }
+                    a {
+                        text-decoration: none;
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                        }
+                        div {
+                            font-size: 0.9375rem;
+                            margin-left: 10px;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 3;
+                            display: -webkit-box;
+                            overflow-y: hidden;
+                            word-break: break-word;
+                            text-align: left;
+                            color: #050505;
+                        }
+                    }
+                }
+            }
+
+            svg {
+                height: 25px;
+                width: 25px;
+            }
+        }
+
         .header_account_username {
             font-size: 14px;
             font-weight: 700;
