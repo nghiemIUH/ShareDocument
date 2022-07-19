@@ -1,5 +1,10 @@
+@import "../../../Resposive.scss";
+
 .comment {
     .list_comment {
+        min-height: 20px;
+        max-height: 300px;
+        overflow-y: auto;
         .comment_item {
             display: flex;
             margin: 10px 0;
@@ -50,16 +55,44 @@
             border-radius: 50%;
             object-fit: cover;
         }
-        input {
+
+        .form_group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             width: 100%;
-            border: none;
             background-color: #f0f2f5;
-            font-size: 15px;
             padding: 10px;
+            border-radius: 18px;
             margin-left: 10px;
-            border-radius: 20px;
-            &:focus {
-                outline: none;
+            input {
+                width: 80%;
+                border: none;
+                background-color: #f0f2f5;
+                font-size: 15px;
+                box-sizing: border-box;
+
+                &:focus {
+                    outline: none;
+                }
+
+                @include responsive_min_600 {
+                    width: 85%;
+                }
+                @include responsive_min_768 {
+                    width: 100%;
+                }
+            }
+            button {
+                font-size: 13px;
+                background-color: #f0f2f5;
+                border: none;
+                cursor: pointer;
+                display: block;
+                color: blue;
+                @include responsive_min_768 {
+                    display: none;
+                }
             }
         }
     }

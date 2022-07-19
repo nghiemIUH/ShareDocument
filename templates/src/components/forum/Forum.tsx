@@ -18,7 +18,9 @@ const Forum = () => {
             return await forumService.getPost(nextPost as string);
         };
         res().then((result) => {
-            setNextPost((prev) => result.data.next);
+            setNextPost((prev) =>
+                result.data.next?.replace(process.env.REACT_APP_URL, "")
+            );
             setPost((prev) => [...prev, ...result.data.results]);
         });
 

@@ -3,7 +3,8 @@ import style from "./ForumItem.module.scss";
 import classNames from "classnames/bind";
 import ImageGrid from "./imageGrid/ImageGrid";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { FaRegComment } from "react-icons/fa";
+// import { FaRegComment } from "react-icons/fa";
+import { GoComment } from "react-icons/go";
 import Comment from "./comment/Comment";
 import parse from "html-react-parser";
 import forumService from "../../../services/forum.service";
@@ -65,7 +66,9 @@ const ForumItem = (props: Props) => {
                     )}
                 </div>
                 <div className={cls("Comment")}>
-                    <FaRegComment onClick={() => setShowComment(true)} />
+                    <GoComment
+                        onClick={() => setShowComment((prev) => !prev)}
+                    />
                 </div>
             </div>
             {showComment && <Comment post_id={props.id} />}

@@ -30,6 +30,11 @@ const Comment = ({ post_id }: { post_id: string }) => {
     const handleComment = async (e: FormEvent) => {
         e.preventDefault();
         const content = (e.target as any)[0] as HTMLInputElement;
+
+        if (content.value.trim().length === 0) {
+            return false;
+        }
+
         const result = await forumService.uploadComment(content.value, post_id);
         if (result.status === 200) {
             content.value = "";
@@ -92,7 +97,10 @@ const Comment = ({ post_id }: { post_id: string }) => {
                     src={process.env.REACT_APP_URL + user.user.avatar}
                     alt=""
                 />
-                <input type="text" placeholder="Trả lời..." />
+                <div className={cls("form_group")}>
+                    <input type="text" placeholder="Trả lời..." />
+                    <button type="submit">Bình luận</button>
+                </div>
             </form>
         </div>
     );
