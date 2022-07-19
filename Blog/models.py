@@ -27,7 +27,8 @@ class Category(models.Model):
 
 class Post(models.Model):
     introduce = models.TextField(default='Introduce')
-    auth = models.ForeignKey(User, on_delete=models.CASCADE)
+    auth = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='blog_post')
     title = models.TextField(blank=True)
     date = models.DateField(default=datetime.datetime.now)
     slug = models.SlugField(default='slug', blank=True, max_length=255)
@@ -55,7 +56,7 @@ class Post(models.Model):
         return reverse("blog:post_detail", kwargs={"slug": self.slug})
 
 
-@receiver(models.signals.post_delete, sender=Post)
+@receiver(models.signals.pre_delete, sender=Post)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.review_image:
         if os.path.isfile(instance.review_image.path) and not instance.review_image.path.endswith('Facebook_Embed.png'):

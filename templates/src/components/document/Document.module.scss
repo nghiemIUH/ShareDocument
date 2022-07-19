@@ -1,3 +1,5 @@
+@import "../Resposive.scss";
+
 .document {
     width: 100%;
     .document_img {
@@ -29,15 +31,16 @@
                 right bottom;
             border-radius: 5px;
             margin-right: 20px;
-            flex: 0.3;
             border: 1px solid #aaa;
             cursor: pointer;
+            @include responsive_max_600 {
+                width: 50%;
+            }
         }
 
         .document_search {
             display: flex;
             align-items: center;
-            flex: 0.5;
             height: 35px;
             border: 1px solid #aaa;
             border-radius: 5px;

@@ -1,10 +1,12 @@
-import { useState, useEffect, memo, FormEvent } from "react";
+import { useState, useEffect, memo, FormEvent, useRef } from "react";
 import style from "./Header.module.scss";
 import classNames from "classnames/bind";
 import { Link, useNavigate } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import userAPI from "../../redux/user/userAPI";
+import { IoNotificationsOutline } from "react-icons/io5";
+import forumService from "../../services/forum.service";
 
 const cls = classNames.bind(style);
 
@@ -12,8 +14,12 @@ const Header = (): JSX.Element => {
     const userState = useAppSelector((state) => state.user);
     const [toggleUser, setToggleUser] = useState(false);
     const [showToggle, setShowToggle] = useState(false);
+    const [showNote, setShowNote] = useState(false);
+    const [notification, setNotification] = useState<NoteType[]>([]);
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const socket = useRef<WebSocket | null>(null);
 
     useEffect(() => {
         const closeToggleUser = (event: Event) => {
@@ -40,6 +46,41 @@ const Header = (): JSX.Element => {
         const keyword = ((e.target as any)[0] as HTMLInputElement).value;
         navigate("/search?keyword=" + keyword);
     };
+
+    useEffect(() => {
+        if (userState.user.username !== "") {
+            socket.current = new WebSocket(
+                "ws://" +
+                    process.env.REACT_APP_URL?.replace(
+                        window.location.protocol + "//",
+                        ""
+                    ) +
+                    "/forum/note/" +
+                    userState.user.username +
+                    "/"
+            );
+            (socket.current as WebSocket).onmessage = (e) => {
+                const note = JSON.parse(e.data).note;
+                if (note !== "")
+                    setNotification((prev) => {
+                        return [note, ...prev];
+                    });
+            };
+        }
+        return () => (socket.current as WebSocket)?.close();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userState]);
+
+    useEffect(() => {
+        const res = async () => {
+            return await forumService.getNotification();
+        };
+        res().then((result) => {
+            setNotification((prev) => {
+                return [...prev, ...result.data];
+            });
+        });
+    }, []);
 
     return (
         <div className={cls("header")}>
@@ -76,7 +117,7 @@ const Header = (): JSX.Element => {
                             <Link to="/document">Tài liệu</Link>
                         </li>
                         <li onClick={() => setShowToggle(false)}>
-                            <Link to="/qa">Hỏi đáp</Link>
+                            <Link to="/forum">Diễn đàn</Link>
                         </li>
                         {!userState.is_login && (
                             <>
@@ -89,7 +130,7 @@ const Header = (): JSX.Element => {
                             </>
                         )}
                         <li className={cls("search")}>
-                            <form action="">
+                            <form action="" onSubmit={handleSearch}>
                                 <input
                                     type="text"
                                     placeholder="Search this blog..."
@@ -112,7 +153,7 @@ const Header = (): JSX.Element => {
                         <Link to="/document">Tài liệu</Link>
                     </li>
                     <li>
-                        <Link to="/qa">Hỏi đáp</Link>
+                        <Link to="/forum">Diễn đàn</Link>
                     </li>
                 </ul>
             </div>
@@ -127,6 +168,56 @@ const Header = (): JSX.Element => {
 
             {userState.is_login ? (
                 <div className={cls("header_account_loged")}>
+                    <div className={cls("note")}>
+                        <IoNotificationsOutline
+                            onClick={() => setShowNote((prev) => !prev)}
+                        />
+                        <div className={cls("note_count")}>
+                            {notification
+                                .map((value) => {
+                                    return value.read ? 0 : 1;
+                                })
+                                .reduce((a: number, b: number) => {
+                                    return a + b;
+                                }, 0)}
+                        </div>
+                        <div
+                            className={cls("note_expand")}
+                            style={
+                                showNote
+                                    ? {
+                                          display: "block",
+                                          opacity: 1,
+                                          visibility: "visible",
+                                      }
+                                    : {
+                                          display: "none",
+                                          opacity: 0,
+                                          visibility: "hidden",
+                                      }
+                            }
+                        >
+                            {notification.map((value, index) => {
+                                return (
+                                    <div
+                                        className={cls("note_item")}
+                                        key={index}
+                                    >
+                                        <Link to={value.url}>
+                                            <img
+                                                src={
+                                                    process.env.REACT_APP_URL +
+                                                    value.otherUser.avatar
+                                                }
+                                                alt=""
+                                            />
+                                            <div>{value.description}</div>
+                                        </Link>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
                     <div className={cls("header_account_avatar")}>
                         <img
                             src={
@@ -191,5 +282,20 @@ const Header = (): JSX.Element => {
         </div>
     );
 };
+
+interface NoteType {
+    id: string;
+    user: {
+        username: string;
+        avatar: string;
+    };
+    otherUser: {
+        username: string;
+        avatar: string;
+    };
+    url: string;
+    description: string;
+    read: boolean;
+}
 
 export default memo(Header);

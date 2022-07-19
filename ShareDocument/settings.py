@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     "django.contrib.postgres",
+    "corsheaders",
     'ckeditor',
     'ckeditor_uploader',
     'User',
@@ -52,7 +53,8 @@ INSTALLED_APPS = [
     'Document',
     'oauth2_provider',
     'rest_framework',
-    "corsheaders",
+    'Forum',
+    'channels'
 ]
 SITE_ID = 1
 
@@ -67,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True
@@ -292,4 +295,13 @@ OAUTH2_PROVIDER = {
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
     # expire access token
     'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,
+}
+ASGI_APPLICATION = 'ShareDocument.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }
