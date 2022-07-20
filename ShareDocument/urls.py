@@ -25,6 +25,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('document/', include('Document.urls')),
     path('forum/', include('Forum.urls')),
+    path('notification/', include('Notification.urls')),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
 

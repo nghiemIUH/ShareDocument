@@ -1,10 +1,10 @@
-import { useState, useEffect, memo, FormEvent, useRef } from "react";
+import { useState, useEffect, memo, FormEvent } from "react";
 import style from "./Comment.module.scss";
 import classNames from "classnames/bind";
 import { useAppSelector } from "../../../../redux/hooks";
 import forumService from "../../../../services/forum.service";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSocket } from "../../../../config/socket";
 
 const cls = classNames.bind(style);
 
@@ -18,7 +18,7 @@ const Comment = ({
     const user = useAppSelector((state) => state.user);
     const [comments, setComments] = useState<CommentType[]>([]);
     const [next, setNext] = useState<string | null>("/forum/comment/");
-    const socket = useRef<WebSocket | null>(null);
+    const socket = useSocket();
 
     useEffect(() => {
         const res = async () => {
@@ -43,76 +43,48 @@ const Comment = ({
             return false;
         }
 
-        const result = await forumService.uploadComment(content.value, post_id);
-        if (result.status === 200) {
-            console.log("socket send");
-            (socket.current as WebSocket).send(
-                JSON.stringify({
-                    auth: {
-                        username: user.user.username,
-                        avatar: user.user.avatar,
-                    }, //other user
-                    username: username,
-                    content: content.value,
-                    url: "/forum/" + post_id,
-                    description:
-                        user.user.username +
-                        " đã bình luận về bài viết của bạn",
-                })
-            );
-            content.value = "";
-            setComments((prev) => {
-                return [...prev, result.data];
+        socket?.emit("sendComment", {
+            auth: {
+                username: user.user.username,
+                avatar: user.user.avatar,
+            }, //other user
+            content: content.value,
+            post_id,
+        });
+        if (user.user.username !== username)
+            socket?.emit("sendNotification", {
+                user: {
+                    username,
+                    avatar: "",
+                },
+                otherUser: {
+                    username: user.user.username,
+                    avatar: user.user.avatar,
+                },
+                url: "/forum/" + post_id,
+                description: "đã bình luận về bài viết của bạn",
+                read: false,
+                seen: false,
             });
-        } else {
-            toast.error("Đã xảy ra lỗi vui lòng thử lại sau", {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
+        content.value = "";
     };
 
     useEffect(() => {
-        socket.current = new WebSocket(
-            "ws://" +
-                process.env.REACT_APP_URL?.replace(
-                    window.location.protocol + "//",
-                    ""
-                ) +
-                "/forum/note/" +
-                username +
-                "/"
-        );
+        socket?.on("receiveComment:" + post_id, (data) => {
+            setComments((prev) => {
+                return [...prev, data];
+            });
+        });
 
-        (socket.current as WebSocket).onmessage = (e) => {
-            const data = JSON.parse(e.data).comment;
-            if (user.user.username !== data.auth.username) {
-                setComments((prev) => [...prev, data]);
-            }
+        return () => {
+            socket?.off("connect");
+            socket?.off("disconnect");
         };
-
-        return () => (socket.current as WebSocket).close();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <div className={cls("comment")}>
-            <ToastContainer
-                position="top-center"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
             <div className={cls("list_comment")}>
                 {comments.map((value, index) => {
                     return (

@@ -93,14 +93,3 @@ class GetPostIDView(APIView):
             return Response(data=post_se.data, status=status.HTTP_200_OK)
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-class GetNotificationView(APIView):
-    def get(self, request):
-        try:
-            note = models.Notification.objects.filter(
-                user=request.user).order_by('-createAt')
-            note_se = serializers.NotificationSerialize(note[:10], many=True)
-            return Response(data=note_se.data, status=status.HTTP_200_OK)
-        except:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
