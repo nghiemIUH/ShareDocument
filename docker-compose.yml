@@ -7,11 +7,13 @@ services:
     ports:
       - "80:80"
     volumes:
-      - frontend_volume:/frontend
-      - backend_volume:/code
+      - share_volume:/frontend
+      - share_volume:/code
+      - share_volume:/node
     depends_on:
       - frontend
       - web
+      - node
 
   web:
     container_name: web
@@ -25,7 +27,7 @@ services:
       - .env.production.local
     command: uwsgi --http :8000 --module ShareDocument.wsgi
     volumes:
-      - backend_volume:/code
+      - share_volume:/code
     depends_on:
       - db_production
 
@@ -49,7 +51,7 @@ services:
     restart: always
     build: ./templates/
     volumes:
-      - frontend_volume:/frontend
+      - share_volume:/frontend
     depends_on:
       - web
     tty: true
@@ -62,7 +64,19 @@ services:
       - 6379
     ports:
       - "6379:6379"
+  node:
+    container_name: node
+    build: ./nodeJS/
+    restart: always
+    volumes:
+      - share_volume:/node
+    expose:
+      - 5000
+    ports:
+      - "5000:5000"
+    command: node build/index.js
+    depends_on:
+      - db_production
 
 volumes:
-  frontend_volume:
-  backend_volume:
+  share_volume:
