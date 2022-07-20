@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'rest_framework',
     'Forum',
-    'channels'
+    'Notification'
 ]
 SITE_ID = 1
 
@@ -290,13 +290,4 @@ OAUTH2_PROVIDER = {
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
     # expire access token
     'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,
-}
-ASGI_APPLICATION = 'ShareDocument.asgi.application'
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
 }

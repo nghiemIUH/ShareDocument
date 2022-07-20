@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, FormEvent, useRef } from "react";
+import { useState, useEffect, memo, FormEvent } from "react";
 import style from "./Header.module.scss";
 import classNames from "classnames/bind";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,7 +6,8 @@ import { BiSearch } from "react-icons/bi";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import userAPI from "../../redux/user/userAPI";
 import { IoNotificationsOutline } from "react-icons/io5";
-import forumService from "../../services/forum.service";
+import notifyService from "../../services/notify.service";
+import { useSocket } from "../../config/socket";
 
 const cls = classNames.bind(style);
 
@@ -19,7 +20,7 @@ const Header = (): JSX.Element => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const socket = useRef<WebSocket | null>(null);
+    const socket = useSocket();
 
     useEffect(() => {
         const closeToggleUser = (event: Event) => {
@@ -48,32 +49,22 @@ const Header = (): JSX.Element => {
     };
 
     useEffect(() => {
-        if (userState.user.username !== "") {
-            socket.current = new WebSocket(
-                "ws://" +
-                    process.env.REACT_APP_URL?.replace(
-                        window.location.protocol + "//",
-                        ""
-                    ) +
-                    "/forum/note/" +
-                    userState.user.username +
-                    "/"
-            );
-            (socket.current as WebSocket).onmessage = (e) => {
-                const note = JSON.parse(e.data).note;
-                if (note !== "")
-                    setNotification((prev) => {
-                        return [note, ...prev];
-                    });
-            };
-        }
-        return () => (socket.current as WebSocket)?.close();
+        socket?.on("notification:" + userState.user.username, (data) => {
+            setNotification((prev) => {
+                return [data, ...prev];
+            });
+        });
+
+        return () => {
+            socket?.off("connect");
+            socket?.off("disconnect");
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userState]);
 
     useEffect(() => {
         const res = async () => {
-            return await forumService.getNotification();
+            return await notifyService.getNotification();
         };
         res().then((result) => {
             setNotification((prev) => {
@@ -81,6 +72,24 @@ const Header = (): JSX.Element => {
             });
         });
     }, []);
+
+    const handleSeenNotify = async () => {
+        const result = await notifyService.seen();
+        if (result.status === 200) {
+            setNotification((prev) => {
+                prev.map((value) => {
+                    return (value.seen = true);
+                });
+                return [...prev];
+            });
+        }
+        setShowNote((prev) => !prev);
+    };
+
+    const handleReadNotify = async (id: string, url: string) => {
+        const result = await notifyService.read(id);
+        if (result.status === 200) navigate(url);
+    };
 
     return (
         <div className={cls("header")}>
@@ -169,13 +178,11 @@ const Header = (): JSX.Element => {
             {userState.is_login ? (
                 <div className={cls("header_account_loged")}>
                     <div className={cls("note")}>
-                        <IoNotificationsOutline
-                            onClick={() => setShowNote((prev) => !prev)}
-                        />
+                        <IoNotificationsOutline onClick={handleSeenNotify} />
                         <div className={cls("note_count")}>
                             {notification
                                 .map((value) => {
-                                    return value.read ? 0 : 1;
+                                    return value.seen ? 0 : 1;
                                 })
                                 .reduce((a: number, b: number) => {
                                     return a + b;
@@ -203,7 +210,14 @@ const Header = (): JSX.Element => {
                                         className={cls("note_item")}
                                         key={index}
                                     >
-                                        <Link to={value.url}>
+                                        <div
+                                            onClick={() =>
+                                                handleReadNotify(
+                                                    value.id as string,
+                                                    value.url
+                                                )
+                                            }
+                                        >
                                             <img
                                                 src={
                                                     process.env.REACT_APP_URL +
@@ -211,8 +225,20 @@ const Header = (): JSX.Element => {
                                                 }
                                                 alt=""
                                             />
-                                            <div>{value.description}</div>
-                                        </Link>
+                                            <div
+                                                style={{
+                                                    color: value.read
+                                                        ? "#aaa"
+                                                        : "#050505",
+                                                }}
+                                            >
+                                                <span>
+                                                    {value.otherUser.username +
+                                                        " "}
+                                                </span>
+                                                {value.description}
+                                            </div>
+                                        </div>
                                     </div>
                                 );
                             })}
@@ -284,7 +310,7 @@ const Header = (): JSX.Element => {
 };
 
 interface NoteType {
-    id: string;
+    id?: string;
     user: {
         username: string;
         avatar: string;
@@ -296,6 +322,7 @@ interface NoteType {
     url: string;
     description: string;
     read: boolean;
+    seen: boolean;
 }
 
 export default memo(Header);

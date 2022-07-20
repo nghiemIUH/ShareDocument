@@ -1,7 +1,12 @@
-.slick-slider {
-    width: 70%;
-}
-.slick-track {
+.swiper {
     display: flex;
-    align-items: center;
+    justify-content: center;
+}
+.swiper-wrapper {
+    align-items: center !important;
+}
+.swiper-slide {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
 }

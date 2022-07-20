@@ -1,3 +1,4 @@
+@import "../../../Resposive.scss";
 .modal {
     position: fixed;
     top: 0;
@@ -13,7 +14,17 @@
     opacity: 1;
     visibility: visible;
     img {
-        max-height: 70vh !important;
+        object-fit: cover;
+        @include responsive_max_600 {
+            width: 90%;
+        }
+        @include responsive_min_768 {
+            max-width: 80%;
+        }
+        @include responsive_min_992 {
+            max-height: 70vh;
+            width: auto;
+        }
     }
     .close {
         position: absolute;

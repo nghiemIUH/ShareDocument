@@ -30,12 +30,3 @@ class LikeSerialize(serializers.ModelSerializer):
     class Meta:
         model = models.Like
         fields = '__all__'
-
-
-class NotificationSerialize(serializers.ModelSerializer):
-    user = UserSerializer()
-    otherUser = UserSerializer()
-
-    class Meta:
-        model = models.Notification
-        fields = '__all__'
