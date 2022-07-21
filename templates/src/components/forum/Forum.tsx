@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, useCallback } from "react";
 import style from "./Forum.module.scss";
 import classNames from "classnames/bind";
 import ForumItem from "./forumItem/ForumItem";
@@ -12,10 +12,11 @@ const Forum = () => {
     const [post, setPost] = useState<Post[]>([]);
     const [nextPost, setNextPost] = useState<string | null>("/forum/post/");
     const [showModal, setShowModal] = useState(false);
+    const [displayType, setDisplayType] = useState("accepted");
 
     useEffect(() => {
         const res = async () => {
-            return await forumService.getPost(nextPost as string);
+            return await forumService.getPost(nextPost as string, displayType);
         };
         res().then((result) => {
             setNextPost((prev) =>
@@ -25,6 +26,32 @@ const Forum = () => {
         });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [displayType]);
+
+    const handleChangeDisplay = (e: ChangeEvent<HTMLSelectElement>) => {
+        setDisplayType((prev) => e.target.value);
+        setNextPost((prev) => "/forum/post/");
+        setPost((prev) => []);
+    };
+
+    const handleAccept = useCallback(async (id: string) => {
+        await forumService.accept(id);
+        setPost((prev) => {
+            const newState = prev.filter((value) => {
+                return value.id !== id;
+            });
+            return [...newState];
+        });
+    }, []);
+
+    const handleDelete = useCallback(async (id: string) => {
+        await forumService.delete(id);
+        setPost((prev) => {
+            const newState = prev.filter((value) => {
+                return value.id !== id;
+            });
+            return [...newState];
+        });
     }, []);
 
     return (
@@ -44,9 +71,26 @@ const Forum = () => {
                 </div>
             </div>
             <ModalUpload showModal={showModal} setShowModal={setShowModal} />
+            {currentUser.user.is_superuser && (
+                <select
+                    className={cls("display")}
+                    id="display"
+                    onChange={handleChangeDisplay}
+                >
+                    <option value="accepted">Đã duyệt</option>
+                    <option value="not_accept">Chưa duyệt</option>
+                </select>
+            )}
 
             {post.map((value, index) => {
-                return <ForumItem {...value} key={index} />;
+                return (
+                    <ForumItem
+                        post={value}
+                        handleAccept={handleAccept}
+                        handleDelete={handleDelete}
+                        key={index}
+                    />
+                );
             })}
         </div>
     );
@@ -64,6 +108,7 @@ interface Post {
     media: {
         file: string;
     }[];
+    accept: boolean;
 }
 
 export default Forum;

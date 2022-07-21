@@ -7,6 +7,8 @@ interface User {
     avatar: string;
     fullName: string;
     email: string;
+    is_staff: boolean;
+    is_superuser: boolean;
 }
 
 interface StateType {

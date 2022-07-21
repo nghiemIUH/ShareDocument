@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.views import APIView
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.db.models import F
 from . import models
 from . import serializers
 # Create your views here.
@@ -44,7 +45,7 @@ class GetAllDocumentView(APIView, CustomPagination):
 
     def get(self, request):
         try:
-            documents = models.Document.objects.all()
+            documents = models.Document.objects.all().order_by('-date')
             result = self.paginate_queryset(documents, request, view=self)
             document_se = serializers.DocumentSerialize(result, many=True)
             return self.get_paginated_response(document_se.data)
@@ -76,3 +77,11 @@ class SearchDocument(APIView, CustomPagination):
             return self.get_paginated_response(document_se.data)
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def increaseView(request):
+    models.Document.objects.filter(
+        pk=request.GET['id']).update(view=F('view')+1)
+    return Response(status=status.HTTP_200_OK)

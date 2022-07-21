@@ -35,6 +35,11 @@ const Comment = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        const element = document.getElementById("list_comment") as HTMLElement;
+        element.scrollTo(0, element.scrollHeight);
+    }, [comments]);
+
     const handleComment = async (e: FormEvent) => {
         e.preventDefault();
         const content = (e.target as any)[0] as HTMLInputElement;
@@ -85,7 +90,7 @@ const Comment = ({
 
     return (
         <div className={cls("comment")}>
-            <div className={cls("list_comment")}>
+            <div className={cls("list_comment")} id="list_comment">
                 {comments.map((value, index) => {
                     return (
                         <div className={cls("comment_item")} key={index}>

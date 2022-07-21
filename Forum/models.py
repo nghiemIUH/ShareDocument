@@ -14,6 +14,8 @@ class Post(models.Model):
         get_user_model(), on_delete=models.CASCADE, related_name='forum_post')
     date = models.DateTimeField(default=timezone.now)
     content = models.TextField()
+    accept = models.BooleanField(default=False)
+    acceptAt = models.DateTimeField(default=timezone.now)
 
     def __str__(self) -> str:
         return self.content

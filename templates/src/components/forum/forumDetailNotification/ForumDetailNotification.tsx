@@ -23,7 +23,7 @@ const ForumDetailNotification = () => {
 
     return (
         <div className={cls("post_detail")}>
-            {post && <ForumItem {...post} />}
+            {post && <ForumItem post={post} />}
         </div>
     );
 };
@@ -40,6 +40,7 @@ interface Post {
     media: {
         file: string;
     }[];
+    accept: boolean;
 }
 
 export default ForumDetailNotification;
