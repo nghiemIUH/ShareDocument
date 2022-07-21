@@ -25,11 +25,14 @@ interface Props {
 
 const cls = classNames.bind(style);
 
-function NewPost({ post }: Props) {
+const NewPost = ({ post }: Props): JSX.Element => {
     return (
         <div className={cls("new_post")}>
             <div className={cls("post_content")}>
-                <Link to="/" className={cls("post-image-link")}>
+                <Link
+                    to={"/post-detail/" + post.slug}
+                    className={cls("post-image-link")}
+                >
                     <img
                         src={process.env.REACT_APP_URL + post.review_image}
                         alt=""
@@ -37,7 +40,9 @@ function NewPost({ post }: Props) {
                 </Link>
                 <div className={cls("post_info")}>
                     <h2 className={cls("post_title")}>
-                        <Link to="/">{post.title}</Link>
+                        <Link to={"/post-detail/" + post.slug}>
+                            {post.title}
+                        </Link>
                     </h2>
                     <div className={cls("post_meta")}>
                         <span className={cls("post_author")}>
@@ -47,12 +52,12 @@ function NewPost({ post }: Props) {
                     </div>
                     <p className={cls("post_snippet")}>{post.introduce}</p>
                     <div className={cls("jump_link")}>
-                        <Link to="/">Read more</Link>
+                        <Link to={"/post-detail/" + post.slug}>Read more</Link>
                     </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default memo(NewPost);

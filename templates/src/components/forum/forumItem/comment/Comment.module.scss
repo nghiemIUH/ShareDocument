@@ -1,0 +1,99 @@
+@import "../../../Resposive.scss";
+
+.comment {
+    .list_comment {
+        min-height: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+        .comment_item {
+            display: flex;
+            margin: 10px 0;
+            width: 70%;
+            img {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                object-fit: cover;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            }
+            .content {
+                font-size: 13px;
+                margin-left: 10px;
+                color: #050505;
+                font-family: inherit;
+                padding: 8px 12px;
+                border-radius: 18px;
+                box-sizing: border-box;
+                background-color: #f0f2f5;
+
+                .username {
+                    font-weight: 600;
+                    line-height: 1.2;
+                    font-size: 0.8125rem;
+                }
+                p {
+                    text-align: start;
+                    unicode-bidi: isolate;
+                    word-wrap: break-word;
+                    font-size: 0.9375rem;
+                    font-weight: 400;
+                    line-height: 1.3333;
+                    white-space: normal;
+                }
+            }
+        }
+    }
+
+    .form_comment {
+        display: flex;
+        height: 30px;
+        width: 100%;
+        margin-top: 10px;
+        img {
+            height: 32px;
+            width: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .form_group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background-color: #f0f2f5;
+            padding: 10px;
+            border-radius: 18px;
+            margin-left: 10px;
+            input {
+                width: 80%;
+                border: none;
+                background-color: #f0f2f5;
+                font-size: 15px;
+                box-sizing: border-box;
+
+                &:focus {
+                    outline: none;
+                }
+
+                @include responsive_min_600 {
+                    width: 85%;
+                }
+                @include responsive_min_768 {
+                    width: 100%;
+                }
+            }
+            button {
+                font-size: 13px;
+                background-color: #f0f2f5;
+                border: none;
+                cursor: pointer;
+                display: block;
+                color: blue;
+                @include responsive_min_768 {
+                    display: none;
+                }
+            }
+        }
+    }
+}

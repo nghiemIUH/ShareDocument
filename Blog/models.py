@@ -1,3 +1,5 @@
+import os
+from django.dispatch import receiver
 import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -25,7 +27,8 @@ class Category(models.Model):
 
 class Post(models.Model):
     introduce = models.TextField(default='Introduce')
-    auth = models.ForeignKey(User, on_delete=models.CASCADE)
+    auth = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='blog_post')
     title = models.TextField(blank=True)
     date = models.DateField(default=datetime.datetime.now)
     slug = models.SlugField(default='slug', blank=True, max_length=255)
@@ -51,3 +54,24 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("blog:post_detail", kwargs={"slug": self.slug})
+
+
+@receiver(models.signals.pre_delete, sender=Post)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    if instance.review_image:
+        if os.path.isfile(instance.review_image.path) and not instance.review_image.path.endswith('Facebook_Embed.png'):
+            os.remove(instance.review_image.path)
+
+
+@receiver(models.signals.pre_save, sender=Post)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+    if not instance.pk:
+        return False
+    try:
+        old_file = Post.objects.get(pk=instance.pk).review_image
+    except Post.DoesNotExist:
+        return False
+    new_file = instance.review_image
+    if not old_file == new_file:
+        if os.path.isfile(old_file.path) and not instance.review_image.path.endswith('Facebook_Embed.png'):
+            os.remove(old_file.path)

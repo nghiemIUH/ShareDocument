@@ -1,0 +1,123 @@
+.register_wrapper {
+    width: 100%;
+    // height: calc(100vh - 70px - 57px);
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    z-index: 3;
+
+    .register {
+        margin: 50px 0;
+        background-color: #fff;
+        padding: 20px;
+        width: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+
+        form {
+            width: 100%;
+            .form_avtar {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                label {
+                    font-size: 13px;
+                    font-weight: 600;
+                    color: #fff;
+                    padding: 5px;
+                    background-color: #5f85e4;
+                    border-radius: 2px;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: rgba($color: #5f85e4, $alpha: 0.8);
+                    }
+                }
+                img {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+            .form_group {
+                width: 100%;
+                padding: 7px 0;
+                display: flex;
+                flex-direction: column;
+
+                label {
+                    margin-bottom: 5px;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+                input {
+                    width: 100%;
+                    padding: 7px 3px;
+                    box-sizing: border-box;
+                    &:focus {
+                        outline-color: #f16b3e;
+                    }
+                }
+            }
+
+            .form_password {
+                width: 100%;
+                padding: 10px 0;
+                display: flex;
+                flex-direction: column;
+                label {
+                    margin-bottom: 5px;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+                div {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    input {
+                        width: 100%;
+                        padding: 7px 3px;
+                        box-sizing: border-box;
+                        &:focus {
+                            outline-color: #f16b3e;
+                        }
+                    }
+                    svg {
+                        position: absolute;
+                        z-index: 5;
+                        height: 100%;
+                        right: 6px;
+                        font-size: 20px;
+                        cursor: pointer;
+                        transition: none !important;
+                        animation-duration: 0s !important;
+                    }
+                }
+            }
+            button {
+                width: 100%;
+                padding: 10px 5px;
+                margin-top: 10px;
+                background-color: #f16b3e;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
+    }
+    .redirect {
+        width: 100%;
+        margin-top: 20px;
+        a {
+            text-decoration: none;
+        }
+    }
+}

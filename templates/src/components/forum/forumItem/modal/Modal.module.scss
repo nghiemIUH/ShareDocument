@@ -1,0 +1,38 @@
+@import "../../../Resposive.scss";
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.3);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    visibility: visible;
+    img {
+        object-fit: cover;
+        @include responsive_max_600 {
+            width: 90%;
+        }
+        @include responsive_min_768 {
+            max-width: 80%;
+        }
+        @include responsive_min_992 {
+            max-height: 70vh;
+            width: auto;
+        }
+    }
+    .close {
+        position: absolute;
+        right: 5vw;
+        top: 5vh;
+        font-size: 30px;
+        color: #fff;
+        cursor: pointer;
+        z-index: 4;
+    }
+}

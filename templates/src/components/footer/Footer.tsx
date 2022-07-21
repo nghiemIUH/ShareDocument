@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 
 const cls = classNames.bind(style);
 
-function Footer() {
+const Footer = (): JSX.Element => {
     return (
         <div className={cls("footer")}>
             <div className={cls("container")}>
@@ -15,6 +15,6 @@ function Footer() {
             </div>
         </div>
     );
-}
+};
 
 export default Footer;

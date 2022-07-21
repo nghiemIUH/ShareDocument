@@ -14,7 +14,7 @@ interface Props {
     categories: CategoryType[];
 }
 
-function Category({ categories }: Props) {
+const Category = ({ categories }: Props): JSX.Element => {
     return (
         <div className={cls("category")}>
             <div className={cls("title")}>
@@ -25,7 +25,10 @@ function Category({ categories }: Props) {
                     {categories.map((value, index) => {
                         return (
                             <li key={index}>
-                                <Link to="/" className={cls("label_name")}>
+                                <Link
+                                    to={"/category/" + value.title}
+                                    className={cls("label_name")}
+                                >
                                     {value.title}
                                     <span className={cls("label_count")}>
                                         ({value.count})
@@ -38,6 +41,6 @@ function Category({ categories }: Props) {
             </div>
         </div>
     );
-}
+};
 
 export default Category;

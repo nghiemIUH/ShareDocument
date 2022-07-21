@@ -25,13 +25,16 @@ interface Props {
 
 const cls = classNames.bind(style);
 
-function HotWrapper({ posts }: Props) {
+const HotWrapper = ({ posts }: Props): JSX.Element => {
     return (
         <div className={cls("hot_wrapper")}>
             {posts.map((value, index) => {
                 return (
                     <div className={cls("hot_item")} key={index}>
-                        <Link to="/" className={cls("img_inner_link")}>
+                        <Link
+                            to={"/post-detail/" + value.slug}
+                            className={cls("img_inner_link")}
+                        >
                             <img
                                 src={
                                     process.env.REACT_APP_URL +
@@ -43,7 +46,9 @@ function HotWrapper({ posts }: Props) {
                         <div className={cls("post_info")}>
                             <span className={cls("post_tag")}>IT</span>
                             <h2 className={cls("post_title")}>
-                                <Link to="/">{value.title}</Link>
+                                <Link to={"/post-detail/" + value.slug}>
+                                    {value.title}
+                                </Link>
                             </h2>
                             <div className={cls("post_meta")}>
                                 <span className={cls("post_author")}>
@@ -59,6 +64,6 @@ function HotWrapper({ posts }: Props) {
             })}
         </div>
     );
-}
+};
 
 export default memo(HotWrapper);

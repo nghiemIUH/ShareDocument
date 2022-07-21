@@ -1,15 +1,20 @@
 import { useEffect } from "react";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import Header from "./components/header/Header";
-import Footer from "./components/footer/Footer";
-import ContentWrapper from "./components/content/ContentWrapper";
-import Post from "./components/post/Post";
-import Login from "./components/login/Login";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import tokenService from "./services/token.service";
 import userAPI from "./redux/user/userAPI";
 import postAPI from "./redux/baseData/postAPI";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import PostDetailPage from "./pages/PostDetailPage";
+import PostCategoryPage from "./pages/PostCategoryPage";
+import DocumentPage from "./pages/DocumentPage";
+import NotFound from "./pages/NotFound";
+import SearchResultPage from "./pages/SearchResultPage";
+import ForumPage from "./pages/ForumPage";
+import ForumDetailNotificationPage from "./pages/ForumDetailNotificationPage";
 
 function App() {
     const userState = useAppSelector((state) => state.user);
@@ -17,7 +22,7 @@ function App() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (tokenService.getAccessToken() && userState.user.username === "") {
+        if (tokenService.getRefreshToken() && userState.user.username === "") {
             dispatch(userAPI.getUserInfo()());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,17 +37,28 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
+
     return (
         <div className="App">
-            <Header />
             <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/post-detail/:slug" element={<PostDetailPage />} />
+                <Route path="/category/:slug" element={<PostCategoryPage />} />
+                <Route path="/document" element={<DocumentPage />} />
+                <Route path="/search" element={<SearchResultPage />} />
+                <Route path="/forum" element={<ForumPage />} />
                 <Route
-                    path="/"
-                    element={<ContentWrapper Component={<Post />} />}
+                    path="/forum/:id"
+                    element={<ForumDetailNotificationPage />}
                 />
-                <Route path="/login" element={<Login />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
-            <Footer />
         </div>
     );
 }

@@ -4,6 +4,17 @@ from . import models
 from User.serializers import UserSerializer
 
 
+class TagSerialize(serializers.ModelSerializer):
+    class Meta:
+        model = models.Tag
+        fields = '__all__'
+
+
+class CategorySerialize(serializers.Serializer):
+    count = serializers.IntegerField()
+    category__title = serializers.CharField()
+
+
 class PopularPostSerialize(serializers.ModelSerializer):
     class Meta:
         model = models.Post
@@ -16,15 +27,14 @@ class PostSerialize(serializers.ModelSerializer):
     class Meta:
         model = models.Post
         fields = ['id', 'introduce', 'title', 'auth', 'slug',
-                  'review_image', 'date', 'content']
+                  'review_image', 'date']
 
 
-class TagSerialize(serializers.ModelSerializer):
+class PostDetailSerialize(serializers.ModelSerializer):
+    auth = UserSerializer()
+    tag = TagSerialize(read_only=True, many=True)
+
     class Meta:
-        model = models.Tag
-        fields = '__all__'
-
-
-class CategorySerialize(serializers.Serializer):
-    count = serializers.IntegerField()
-    category__title = serializers.CharField()
+        model = models.Post
+        fields = ['id', 'introduce', 'title', 'auth', 'slug',
+                  'review_image', 'date', 'content', 'tag']

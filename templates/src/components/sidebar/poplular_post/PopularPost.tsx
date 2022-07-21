@@ -15,7 +15,7 @@ interface Props {
     posts: Post[];
 }
 
-function PopularPost({ posts }: Props) {
+const PopularPost = ({ posts }: Props): JSX.Element => {
     return (
         <div className={cls("popular_post")}>
             <div className={cls("title")}>
@@ -26,7 +26,10 @@ function PopularPost({ posts }: Props) {
                     <div className={cls("content")} key={index}>
                         <div className={cls("post")}>
                             <div className={cls("post_content")}>
-                                <Link to="/" className={cls("post_image_link")}>
+                                <Link
+                                    to={"/post-detail/" + value.slug}
+                                    className={cls("post_image_link")}
+                                >
                                     <img
                                         src={
                                             process.env.REACT_APP_URL +
@@ -37,7 +40,9 @@ function PopularPost({ posts }: Props) {
                                 </Link>
                                 <div className={cls("post_info")}>
                                     <h2 className={cls("post_title")}>
-                                        <Link to="/">{value.title}</Link>
+                                        <Link to={"/post-detail/" + value.slug}>
+                                            {value.title}
+                                        </Link>
                                     </h2>
                                 </div>
                             </div>
@@ -47,6 +52,6 @@ function PopularPost({ posts }: Props) {
             })}
         </div>
     );
-}
+};
 
 export default PopularPost;

@@ -42,6 +42,7 @@ axiosAuth.interceptors.response.use(
                     });
                     if (res.data.access_token) {
                         tokenService.setAccessToken(res.data.access_token);
+                        tokenService.setRefreshToken(res.data.refresh_token);
                     }
                     return axiosAuth(config);
                 }

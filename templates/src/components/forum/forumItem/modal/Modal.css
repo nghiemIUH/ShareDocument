@@ -1,0 +1,12 @@
+.swiper {
+    display: flex;
+    justify-content: center;
+}
+.swiper-wrapper {
+    align-items: center !important;
+}
+.swiper-slide {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+}

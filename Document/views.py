@@ -1,46 +1,78 @@
-from django.shortcuts import redirect, render
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.views import APIView
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from . import models
-from django.views import View
-from django.http import HttpResponse
-import json
-from django.contrib.auth.decorators import login_required
-from django.conf import settings
-
+from . import serializers
 # Create your views here.
 
 
-class DocumentView(View):
-    def get(self, request):
-        category = models.Category.objects.all()
-        if request.user.is_authenticated:
-            document_user = models.DocumentUser.objects.values_list(
-                'document', flat=True).filter(user=request.user)
-            data = {'category': category, 'document_user': document_user}
-
-        else:
-            data = {'category': category}
-        return render(request, 'document.html', data)
-
-    def put(self, request):
-        data = json.loads(request.body.decode('utf-8'))
-        num_download = models.Document.objects.get(pk=data['pk']).num_download
-        models.Document.objects.filter(pk=data['pk']).update(
-            num_download=num_download+1)
-        return HttpResponse(json.dumps({'result': 'success'}))
+class CustomPagination(LimitOffsetPagination):
+    default_limit = 10
 
 
-@login_required(login_url=settings.LOGIN_URL)
-def buyDocument(request, id):
-    document = models.Document.objects.get(pk=id)
-    user = request.user
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def getAllCategory(request):
     try:
-        document_user = models.DocumentUser.objects.get(user=user)
-
+        category = models.Category.objects.all()
+        category_se = serializers.CategorySerialize(category, many=True)
     except:
-        document_user = models.DocumentUser.objects.create(user=user)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response(data=category_se.data, status=status.HTTP_200_OK)
 
-    document_user.document.add(document)
-    document_user.save()
-    user.balance -= document.price
-    user.save()
-    return redirect('/document')
+
+class GetDocumentView(APIView, CustomPagination):
+    permission_classes = [AllowAny]
+
+    def get(self, request, category):
+        try:
+            category = models.Category.objects.get(title=category)
+            documents = models.Document.objects.filter(category=category)
+            result = self.paginate_queryset(documents, request, view=self)
+            documents_se = serializers.DocumentSerialize(result, many=True)
+            return self.get_paginated_response(documents_se.data)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetAllDocumentView(APIView, CustomPagination):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        try:
+            documents = models.Document.objects.all()
+            result = self.paginate_queryset(documents, request, view=self)
+            document_se = serializers.DocumentSerialize(result, many=True)
+            return self.get_paginated_response(document_se.data)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class SearchDocument(APIView, CustomPagination):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        try:
+            query = request.GET.get('keyword')
+
+            category_name = request.GET.get('category')
+            if category_name == 'All':
+                documents = models.Document.objects.all()
+            else:
+                category = models.Category.objects.get(title=category_name)
+                documents = models.Document.objects.filter(category=category)
+            if query.strip() != "":
+                search_vector = SearchVector(
+                    'title', weight='B')+SearchVector('description', weight='A')
+                search_query = SearchQuery(query)
+                documents = documents.annotate(rank=SearchRank(
+                    search_vector, search_query)).filter(rank__gte=0.3).order_by('-rank')
+            documents = self.paginate_queryset(documents, request, view=self)
+            document_se = serializers.DocumentSerialize(documents, many=True)
+            return self.get_paginated_response(document_se.data)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

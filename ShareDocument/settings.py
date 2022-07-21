@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    "django.contrib.postgres",
+    "corsheaders",
     'ckeditor',
     'ckeditor_uploader',
     'User',
@@ -45,7 +47,8 @@ INSTALLED_APPS = [
     'Document',
     'oauth2_provider',
     'rest_framework',
-    "corsheaders",
+    'Forum',
+    'Notification'
 ]
 SITE_ID = 1
 
@@ -56,14 +59,36 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://vndev.info",
+    "http://vndev.info",
+    "http://local.deepcode.tk",
+    "https://local.deepcode.tk",
+    "http://localhost:3000",
+]
+
+X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:3000'
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    'X-Frame-Options'
+]
 
 ROOT_URLCONF = 'ShareDocument.urls'
 
@@ -147,7 +172,7 @@ USE_TZ = True
 AUTH_USER_MODEL = 'User.CustomUser'
 
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 # STATIC_ROOT = 'static/'
 
 STATICFILES_DIRS = [
@@ -245,7 +270,9 @@ CACHES = {
     }
 }
 APPEND_SLASH = False
+
 CACHE_TTL = 60 * 10
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
@@ -254,17 +281,13 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 3
+    'PAGE_SIZE': 10
 }
+
 OAUTH2_PROVIDER = {
     # send json data
     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
-    # this is the list of available scopes
-    # expire access token
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
+    # expire access token
     'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,
-    'REFRESH_TOKEN_EXPIRE_SECONDS': 30*24*60*60
 }
-CLIENT_ID = 'pr4Mb5hBF1DJT2jvysjMFAPwORtMxKnzTmGlK9xU'
-CLIENT_SECRET = 'kw69kxW8tgFnt0f61Fp1jTAn7QIJdSPFHHT2KTejjQZVMg6QGfhAbW9zXa7bTCMcvoXtcxDFtVGQ1oJUB4Dtj55o15byEWGVEj4Mhhs2gNIqN83zKx0liITbBHCGtINM'
-# password

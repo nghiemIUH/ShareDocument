@@ -1,0 +1,88 @@
+@import "../../Resposive.scss";
+
+.document_item {
+    display: flex;
+    flex-direction: column;
+    height: 185px;
+    margin: 10px 5px;
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    justify-content: space-between;
+
+    transition: transform 0.3s;
+
+    &:hover {
+        transform: scale3d(1.05, 1.05, 1);
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    @include responsive_max_600 {
+        width: 30%;
+    }
+
+    @include responsive_min_600 {
+        width: 20%;
+    }
+    @include responsive_min_768 {
+        width: 23%;
+    }
+    @include responsive_min_992 {
+        width: 23%;
+        height: 200px;
+    }
+
+    img {
+        width: 100%;
+        height: 85px;
+        object-fit: cover;
+        @include responsive_min_992 {
+            height: 120px;
+        }
+    }
+    .document_content {
+        display: flex;
+        flex-direction: column;
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        h4 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: initial;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 13px;
+            color: #aaa;
+            .date {
+                span {
+                    &::before {
+                        font-family: FontAwesome;
+                        font-weight: 400;
+                        margin: 0 3px 0 0;
+                        content: "\f017";
+                    }
+                }
+            }
+            .view {
+                span {
+                    &::before {
+                        font-family: FontAwesome;
+                        font-weight: 400;
+                        margin: 0 3px 0 0;
+                        content: "\f06e";
+                    }
+                }
+            }
+        }
+    }
+}

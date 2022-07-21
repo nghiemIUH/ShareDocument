@@ -1,0 +1,13 @@
+@import "../../Resposive.scss";
+.post_detail {
+    margin: 0 auto;
+    @include responsive_max_600 {
+        width: 90%;
+    }
+    @include responsive_min_600 {
+        width: 90%;
+    }
+    @include responsive_min_768 {
+        width: 70%;
+    }
+}

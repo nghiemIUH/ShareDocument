@@ -8,7 +8,7 @@
     box-sizing: border-box;
     padding: 0 20px;
     height: 70px;
-    z-index: 1000;
+    z-index: 1;
     position: relative;
 
     .header_toggle {
@@ -54,9 +54,9 @@
         background-color: #203656;
         box-sizing: border-box;
         visibility: hidden;
-        z-index: 1000;
         opacity: 0;
-        transition: all 0.17s ease;
+        display: none;
+        transition: none !important;
 
         @include responsive_min_768 {
             display: none !important;
@@ -88,6 +88,37 @@
                     }
                     &:hover {
                         background-color: rgba($color: #203656, $alpha: 0.3);
+                    }
+                }
+                .search {
+                    form {
+                        width: 50%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        input {
+                            width: 100%;
+                            height: 100%;
+                            background-color: #203656;
+                            border: none;
+                            border-bottom: 1px solid #fff;
+                            color: #fff;
+                            padding: 5px;
+                            font-size: 13px;
+                            margin-right: 5px;
+                            &:focus {
+                                outline: none;
+                            }
+                        }
+                        button {
+                            border: none;
+                            background-color: #203656;
+                            cursor: pointer;
+                            svg {
+                                font-size: 18px;
+                                color: #fff;
+                            }
+                        }
                     }
                 }
             }
@@ -125,33 +156,33 @@
         }
     }
     .header_search {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 70px;
-        z-index: 99;
+        height: 50%;
         background-color: #ffffff;
         box-sizing: border-box;
-        padding: 0 20px;
         transition: all 0.17s linear;
+        border: 1px solid #aaa;
+        border-radius: 20px;
+        padding: 3px 5px;
+
+        @include responsive_max_600 {
+            display: none;
+        }
 
         form {
             width: 100%;
-            height: 70px;
+            height: 100%;
             background-color: rgba(0, 0, 0, 0);
-            line-height: 70px;
             overflow: hidden;
             padding: 0;
             position: relative;
+            display: flex;
+            align-items: center;
 
             input {
                 width: 100%;
-                height: 70px;
                 font-family: inherit;
                 color: #203656;
                 margin: 0;
-                padding: 0 58px 0 0;
                 background-color: rgba(0, 0, 0, 0);
                 font-size: 13px;
                 font-weight: 400;
@@ -162,22 +193,25 @@
                     outline: none;
                 }
             }
-            svg {
-                position: absolute;
-                top: 23px;
-                right: 0;
-                display: block;
-                width: 20px;
-                height: 20px;
-                background-color: rgba(255, 255, 255, 0.05);
-                line-height: 70px;
-                z-index: 20;
-                color: #203656;
-                font-size: 16px;
-                font-weight: 400;
-                text-align: center;
-                cursor: pointer;
-                transition: color 0.17s ease;
+
+            button {
+                border: none;
+                background-color: #fff;
+                display: flex;
+                align-items: center;
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    background-color: rgba(255, 255, 255, 0.05);
+                    line-height: 70px;
+                    z-index: 2;
+                    color: #203656;
+                    font-size: 16px;
+                    font-weight: 400;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: color 0.17s ease;
+                }
             }
         }
     }
@@ -188,7 +222,7 @@
             height: 20px;
             background-color: rgba(255, 255, 255, 0.05);
             line-height: 70px;
-            z-index: 20;
+            z-index: 2;
             color: #203656;
             font-size: 16px;
             font-weight: 400;
@@ -231,6 +265,83 @@
     .header_account_loged {
         display: flex;
         align-items: center;
+
+        .note {
+            margin-right: 10px;
+            position: relative;
+            cursor: pointer;
+            .note_count {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: -3px;
+                right: -3px;
+                width: 15px;
+                height: 15px;
+                font-size: 13px;
+                color: #fff;
+                font-weight: 600;
+                padding: 3px;
+                border-radius: 50%;
+                background-color: red;
+            }
+            .note_expand {
+                z-index: 2;
+                background-color: #fff;
+                width: 300px;
+                position: absolute;
+                padding: 10px;
+                right: -100px;
+                top: 35px;
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+                    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+                    rgba(0, 0, 0, 0.12) 0px 4px 6px,
+                    rgba(0, 0, 0, 0.17) 0px 12px 13px,
+                    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+                border-radius: 10px;
+                .note_item {
+                    padding: 10px 5px;
+                    border-radius: 5px;
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.1);
+                    }
+                    div {
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                        }
+                        div {
+                            font-size: 0.9375rem;
+                            margin-left: 10px;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 3;
+                            display: -webkit-box;
+                            overflow-y: hidden;
+                            word-break: break-word;
+                            text-align: left;
+                            color: #050505;
+                            span {
+                                font-weight: 900;
+                                font-size: 1rem;
+                            }
+                        }
+                    }
+                }
+            }
+
+            svg {
+                height: 25px;
+                width: 25px;
+            }
+        }
+
         .header_account_username {
             font-size: 14px;
             font-weight: 700;
@@ -267,7 +378,7 @@
                 box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
                 padding: 10px;
                 background-color: #fff;
-                z-index: 99999;
+                z-index: 2;
                 font-weight: 500;
                 opacity: 0;
                 visibility: hidden;
