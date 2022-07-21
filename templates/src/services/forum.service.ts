@@ -1,10 +1,13 @@
 import { axiosAuth } from "../config/axiosConfig";
 
 class ForumService {
-    getPost(url: string) {
+    getPost(url: string, type: string) {
         return axiosAuth({
             url,
             method: "get",
+            params: {
+                type,
+            },
         });
     }
 
@@ -66,6 +69,24 @@ class ForumService {
         return axiosAuth({
             url: "/forum/get-note/",
             method: "get",
+        });
+    }
+    accept(id: string) {
+        return axiosAuth({
+            url: "/forum/accept/",
+            method: "put",
+            data: {
+                id,
+            },
+        });
+    }
+    delete(id: string) {
+        return axiosAuth({
+            url: "/forum/delete/",
+            method: "put",
+            data: {
+                id,
+            },
         });
     }
 }

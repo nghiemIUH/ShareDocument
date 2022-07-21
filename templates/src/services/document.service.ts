@@ -31,6 +31,15 @@ class DocumentService {
             },
         });
     }
+    increaseView(id: string) {
+        return axiosNotAuth({
+            url: "/document/increase-view/",
+            method: "GET",
+            params: {
+                id,
+            },
+        });
+    }
 }
 
 export default new DocumentService();

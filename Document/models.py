@@ -1,6 +1,7 @@
 import datetime
 from django.db import models
 from django.utils.text import slugify
+from django.utils import timezone
 
 # Create your models here.
 
@@ -15,7 +16,7 @@ class Category(models.Model):
 class Document(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    date = models.DateField(default=datetime.datetime.now)
+    date = models.DateTimeField(default=timezone.now)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to='document_file/%Y/%m/%d')
     review_img = models.FileField(

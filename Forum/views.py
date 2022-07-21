@@ -1,12 +1,13 @@
 # from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope
 from oauth2_provider.contrib.rest_framework import OAuth2Authentication
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.views import APIView
 from . import models, serializers
+from django.utils import timezone
 
 
 class PaginationCustomPost(LimitOffsetPagination):
@@ -22,7 +23,8 @@ class PostView(APIView, PaginationCustomPost):
     authentication_classes = [OAuth2Authentication]
 
     def get(self, request):
-        posts = models.Post.objects.all().order_by('-date')
+        posts = models.Post.objects.filter(
+            accept=request.GET['type'] == 'accepted').order_by('-date')
         posts = self.paginate_queryset(posts, request, view=self)
         posts_se = serializers.PostSerialize(posts, many=True)
         return self.get_paginated_response(posts_se.data)
@@ -66,6 +68,9 @@ class CommentView(APIView, PaginationCustomPost):
 
 
 class LikeView(APIView):
+    permission_classes = [IsAuthenticated, TokenHasReadWriteScope]
+    authentication_classes = [OAuth2Authentication]
+
     def get(self, request):
         try:
             post = models.Post.objects.get(pk=request.GET['post_id'])
@@ -86,10 +91,38 @@ class LikeView(APIView):
 
 
 class GetPostIDView(APIView):
+    permission_classes = [IsAuthenticated, TokenHasReadWriteScope]
+    authentication_classes = [OAuth2Authentication]
+
     def get(self, request):
         try:
             post = models.Post.objects.get(pk=request.GET['id'])
             post_se = serializers.PostSerialize(post)
             return Response(data=post_se.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class AcceptPost(APIView):
+    permission_classes = [IsAdminUser, TokenHasReadWriteScope]
+    authentication_classes = [OAuth2Authentication]
+
+    def put(self, request):
+        try:
+            models.Post.objects.filter(pk=request.data['id']).update(
+                accept=True, acceptAt=timezone.now())
+            return Response(status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeletePost(APIView):
+    permission_classes = [IsAdminUser, TokenHasReadWriteScope]
+    authentication_classes = [OAuth2Authentication]
+
+    def put(self, request):
+        try:
+            models.Post.objects.filter(pk=request.data['id']).delete()
+            return Response(status=status.HTTP_200_OK)
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)

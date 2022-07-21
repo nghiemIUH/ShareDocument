@@ -9,3 +9,5 @@ ShareDocument/__pycache__
 task
 Forum/__pycache__
 Forum/migrations/__pycache__
+Notification/__pycache__
+Notification/migrations/__pycache__
