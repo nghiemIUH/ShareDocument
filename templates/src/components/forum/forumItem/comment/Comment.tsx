@@ -5,19 +5,23 @@ import { useAppSelector } from "../../../../redux/hooks";
 import forumService from "../../../../services/forum.service";
 import "react-toastify/dist/ReactToastify.css";
 import { useSocket } from "../../../../config/socket";
+import dateFormate from "../../../../config/fortmateDate";
 
 const cls = classNames.bind(style);
 
 const Comment = ({
     post_id,
     username,
+    setTotalComment,
 }: {
     post_id: string;
     username: string;
+    setTotalComment: any;
 }) => {
     const user = useAppSelector((state) => state.user);
     const [comments, setComments] = useState<CommentType[]>([]);
     const [next, setNext] = useState<string | null>("/forum/comment/");
+    const [isScroll, setIsScroll] = useState(true);
     const socket = useSocket();
 
     useEffect(() => {
@@ -36,8 +40,13 @@ const Comment = ({
     }, []);
 
     useEffect(() => {
-        const element = document.getElementById("list_comment") as HTMLElement;
-        element.scrollTo(0, element.scrollHeight);
+        if (isScroll) {
+            const element = document.getElementById(
+                "list_comment"
+            ) as HTMLElement;
+            element.scrollTo(0, element.scrollHeight);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [comments]);
 
     const handleComment = async (e: FormEvent) => {
@@ -72,13 +81,18 @@ const Comment = ({
                 seen: false,
             });
         content.value = "";
+        setIsScroll((prev) => true);
     };
 
     useEffect(() => {
         socket?.on("receiveComment:" + post_id, (data) => {
-            setComments((prev) => {
-                return [...prev, data];
+            setTotalComment((prev: number) => {
+                return prev + 1;
             });
+            setComments((prev) => {
+                return [...prev, { ...data, date: new Date().toString() }];
+            });
+            setIsScroll((prev) => true);
         });
 
         return () => {
@@ -88,9 +102,28 @@ const Comment = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const handleLoadMoreComment = async () => {
+        const result = await forumService.getComment(next as string, post_id);
+        setNext((prev) => {
+            return result.data.next?.replace(process.env.REACT_APP_URL, "");
+        });
+        setComments((prev) => {
+            return [...result.data.results, ...prev];
+        });
+        setIsScroll((prev) => false);
+    };
+
     return (
         <div className={cls("comment")}>
             <div className={cls("list_comment")} id="list_comment">
+                {next && (
+                    <div
+                        className={cls("more_comment")}
+                        onClick={handleLoadMoreComment}
+                    >
+                        Xem thêm bình luận
+                    </div>
+                )}
                 {comments.map((value, index) => {
                     return (
                         <div className={cls("comment_item")} key={index}>
@@ -104,6 +137,11 @@ const Comment = ({
                             <div className={cls("content")}>
                                 <div className={cls("username")}>
                                     {value.auth.username}
+                                    <span>
+                                        {dateFormate(
+                                            new Date(value.date as string)
+                                        )}
+                                    </span>
                                 </div>
                                 <p>{value.content}</p>
                             </div>

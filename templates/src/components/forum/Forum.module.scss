@@ -1,4 +1,25 @@
 @import "../Resposive.scss";
+
+.not_login {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    h4 {
+        padding: 10px;
+    }
+    a {
+        text-decoration: none;
+        padding: 10px;
+        background-color: #1b74e4;
+        color: #fff;
+        border-radius: 5px;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
+
 .forum {
     margin: 0 auto;
     @include responsive_max_600 {

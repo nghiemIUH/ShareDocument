@@ -16,23 +16,38 @@ const cls = classNames.bind(style);
 
 const ForumItem = (props: Props) => {
     const [showComment, setShowComment] = useState(false);
-    const [isLike, setIsLike] = useState(false);
+    const [like, setLike] = useState({
+        isLike: false,
+        numLike: 0,
+    });
     const [showTaskMenu, setShowTaskMenu] = useState(false);
     const userState = useAppSelector((state) => state.user);
+    const [totalComment, setTotalComment] = useState(0);
+
+    useEffect(() => {
+        const res = async () => {
+            return await forumService.getNumComment(props.post.id);
+        };
+        res().then((result) => {
+            setTotalComment(result.data);
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         const res = async () => {
             return await forumService.getLike(props.post.id);
         };
         res().then((result) => {
-            setIsLike(result.data.isLike);
+            setLike((prev) => result.data);
         });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleLike = async () => {
         const result = await forumService.handleLike(props.post.id);
-        setIsLike(result.data.isLike);
+        setLike((prev) => result.data);
     };
 
     const accept = () => {
@@ -43,6 +58,20 @@ const ForumItem = (props: Props) => {
         setShowTaskMenu((prev) => !prev);
         props.handleDelete(props.post.id);
     };
+
+    useEffect(() => {
+        const closeToggleUser = (event: Event) => {
+            const toggle = document.getElementById(
+                props.post.id
+            ) as HTMLDivElement;
+            if (!toggle.contains(event.target as Node)) {
+                setShowTaskMenu((prev) => false);
+            }
+        };
+        document.addEventListener("click", closeToggleUser);
+        return () => document.removeEventListener("click", closeToggleUser);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showTaskMenu]);
 
     return (
         <div className={cls("forum_item")}>
@@ -70,6 +99,7 @@ const ForumItem = (props: Props) => {
                 {userState.user.is_superuser && (
                     <div>
                         <BsThreeDots
+                            id={props.post.id}
                             onClick={() => setShowTaskMenu((prev) => !prev)}
                         />
                         {showTaskMenu && (
@@ -105,7 +135,7 @@ const ForumItem = (props: Props) => {
             </div>
             <div className={cls("footer")}>
                 <div className={cls("like")}>
-                    {isLike ? (
+                    {like.isLike ? (
                         <AiFillHeart
                             style={{ color: "red" }}
                             onClick={handleLike}
@@ -113,17 +143,20 @@ const ForumItem = (props: Props) => {
                     ) : (
                         <AiOutlineHeart onClick={handleLike} />
                     )}
+                    <div>{like.numLike}</div>
                 </div>
-                <div className={cls("Comment")}>
+                <div className={cls("comment")}>
                     <GoComment
                         onClick={() => setShowComment((prev) => !prev)}
-                    />
+                    />{" "}
+                    <div>{totalComment}</div>
                 </div>
             </div>
             {showComment && (
                 <Comment
                     post_id={props.post.id}
                     username={props.post.auth.username}
+                    setTotalComment={setTotalComment}
                 />
             )}
         </div>

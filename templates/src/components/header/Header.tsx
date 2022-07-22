@@ -29,7 +29,7 @@ const Header = (): JSX.Element => {
             ) as HTMLDivElement;
             if (userState.is_login) {
                 if (!toggle.contains(event.target as Node)) {
-                    setToggleUser(false);
+                    setToggleUser((prev) => false);
                 }
             }
         };
@@ -37,7 +37,21 @@ const Header = (): JSX.Element => {
         document.addEventListener("click", closeToggleUser);
         return () => document.removeEventListener("click", closeToggleUser);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userState]);
+
+    useEffect(() => {
+        const closeToggleUser = (event: Event) => {
+            const toggle = document.getElementById("notify") as HTMLDivElement;
+            if (userState.is_login) {
+                if (!toggle.contains(event.target as Node)) {
+                    setShowNote((prev) => false);
+                }
+            }
+        };
+
+        document.addEventListener("click", closeToggleUser);
+        return () => document.removeEventListener("click", closeToggleUser);
+    }, [userState]);
 
     const handleLogout = () => {
         dispatch(userAPI.logout()());
@@ -178,7 +192,10 @@ const Header = (): JSX.Element => {
             {userState.is_login ? (
                 <div className={cls("header_account_loged")}>
                     <div className={cls("note")}>
-                        <IoNotificationsOutline onClick={handleSeenNotify} />
+                        <IoNotificationsOutline
+                            onClick={handleSeenNotify}
+                            id="notify"
+                        />
                         <div className={cls("note_count")}>
                             {notification
                                 .map((value) => {
@@ -194,12 +211,12 @@ const Header = (): JSX.Element => {
                                 showNote
                                     ? {
                                           display: "block",
-                                          opacity: 1,
+                                          opacity: "1",
                                           visibility: "visible",
                                       }
                                     : {
                                           display: "none",
-                                          opacity: 0,
+                                          opacity: "0",
                                           visibility: "hidden",
                                       }
                             }

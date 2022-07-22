@@ -61,7 +61,19 @@ const ModalUpload = ({
         }
         const result = await forumService.uploadPost(data);
         if (result.status === 200) {
-            window.location.reload();
+            toast.info("Đăng thành công vui lòng chờ quản trị viên phê duyệt", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
         } else {
             toast.error("Đã xảy ra lỗi vui lòng thử lại sau", {
                 position: "top-center",

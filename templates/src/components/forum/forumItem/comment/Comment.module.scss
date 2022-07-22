@@ -5,6 +5,13 @@
         min-height: 20px;
         max-height: 300px;
         overflow-y: auto;
+        .more_comment {
+            margin: 20px 0;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #65676b;
+        }
         .comment_item {
             display: flex;
             margin: 10px 0;
@@ -30,6 +37,12 @@
                     font-weight: 600;
                     line-height: 1.2;
                     font-size: 0.8125rem;
+
+                    span {
+                        font-size: 11px;
+                        color: #65676b;
+                        margin-left: 5px;
+                    }
                 }
                 p {
                     text-align: start;

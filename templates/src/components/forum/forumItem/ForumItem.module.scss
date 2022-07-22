@@ -48,7 +48,6 @@
             .menu {
                 position: absolute;
                 width: 200px;
-                min-height: 100px;
                 top: 20px;
                 right: 0;
                 box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -95,10 +94,19 @@
     }
     .footer {
         display: flex;
+        align-items: center;
         padding: 5px 0;
         border-top: 1px solid #f0f2f5;
         border-bottom: 1px solid #f0f2f5;
-
+        .like {
+            display: flex;
+            align-items: center;
+            margin-right: 50px;
+        }
+        .comment {
+            display: flex;
+            align-items: center;
+        }
         svg {
             font-size: 25px;
             cursor: pointer;
