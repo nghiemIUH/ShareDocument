@@ -89,5 +89,15 @@ class ForumService {
             },
         });
     }
+
+    getNumComment(id: string) {
+        return axiosAuth({
+            url: "/forum/num-comment/",
+            method: "get",
+            params: {
+                id,
+            },
+        });
+    }
 }
 export default new ForumService();

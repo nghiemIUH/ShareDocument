@@ -15,7 +15,7 @@ class PaginationCustomPost(LimitOffsetPagination):
 
 
 class PaginationCustomComment(LimitOffsetPagination):
-    default_limit = 10
+    default_limit = 5
 
 
 class PostView(APIView, PaginationCustomPost):
@@ -41,17 +41,18 @@ class PostView(APIView, PaginationCustomPost):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class CommentView(APIView, PaginationCustomPost):
+class CommentView(APIView, PaginationCustomComment):
     permission_classes = [IsAuthenticated, TokenHasReadWriteScope]
     authentication_classes = [OAuth2Authentication]
 
     def get(self, request):
         post_id = request.GET['post_id']
         post = models.Post.objects.get(pk=post_id)
-        comments = models.Comment.objects.filter(post=post)
+        comments = models.Comment.objects.filter(
+            post=post).order_by('-date')
         comments = self.paginate_queryset(comments, request, view=self)
         comments_se = serializers.CommentSerialize(comments, many=True)
-        return self.get_paginated_response(comments_se.data)
+        return self.get_paginated_response(reversed(comments_se.data))
 
     def post(self, request):
         try:
@@ -72,22 +73,24 @@ class LikeView(APIView):
     authentication_classes = [OAuth2Authentication]
 
     def get(self, request):
+        post = models.Post.objects.get(pk=request.GET['post_id'])
+        likes = post.like_set.count()
         try:
-            post = models.Post.objects.get(pk=request.GET['post_id'])
             models.Like.objects.get(auth=request.user, post=post)
-            return Response(data={"isLike": True}, status=status.HTTP_200_OK)
+            return Response(data={"isLike": True, 'numLike': likes}, status=status.HTTP_200_OK)
         except:
-            return Response(data={"isLike": False}, status=status.HTTP_200_OK)
+            return Response(data={"isLike": False, 'numLike': likes}, status=status.HTTP_200_OK)
 
     def post(self, request):
         post = models.Post.objects.get(pk=request.data['post_id'])
+        likes = post.like_set.count()
         try:
             like = models.Like.objects.get(auth=request.user, post=post)
             like.delete()
-            return Response(data={"isLike": False}, status=status.HTTP_200_OK)
+            return Response(data={"isLike": False, 'numLike': likes-1}, status=status.HTTP_200_OK)
         except:
             models.Like.objects.create(auth=request.user, post=post)
-            return Response(data={"isLike": True}, status=status.HTTP_200_OK)
+            return Response(data={"isLike": True, 'numLike': likes+1}, status=status.HTTP_200_OK)
 
 
 class GetPostIDView(APIView):
@@ -126,3 +129,13 @@ class DeletePost(APIView):
             return Response(status=status.HTTP_200_OK)
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetNumComment(APIView):
+    permission_classes = [IsAuthenticated, TokenHasReadWriteScope]
+    authentication_classes = [OAuth2Authentication]
+
+    def get(self, request):
+        post = models.Post.objects.get(pk=request.GET['id'])
+        comments = post.comment_set.count()
+        return Response(data=comments, status=status.HTTP_200_OK)

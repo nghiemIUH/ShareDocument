@@ -6,9 +6,9 @@
 }
 
 * {
-    transition: all 0.3s;
+    transition: all 0.2s;
     animation-name: myfading;
-    animation-duration: 0.5s;
+    animation-duration: 0.3s;
 }
 
 body {
