@@ -27,7 +27,7 @@ services:
     command: uwsgi --http :8000 --module ShareDocument.wsgi
     volumes:
       - django:/code
-      # - ../media:/code/media
+      - ../media:/code/media
     depends_on:
       - db_production
 
