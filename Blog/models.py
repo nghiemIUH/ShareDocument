@@ -6,8 +6,11 @@ from django.contrib.auth import get_user_model
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse
 from django.utils.text import slugify
-# Create your models here.
+from django.contrib.postgres.search import SearchVectorField
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVector
 
+# Create your models here.
 User = get_user_model()
 
 
@@ -39,10 +42,18 @@ class Post(models.Model):
         default='Facebook_Embed.png', upload_to='review_post_img')
     is_delete = models.BooleanField(default=False)
     content = RichTextUploadingField()
+    search_vector = SearchVectorField(
+        null=True, blank=True, editable=False)
+
+    class Meta:
+        indexes = [
+            GinIndex(fields=["search_vector"]),
+        ]
 
     def save(self, *args, **kwargs) -> None:
         self.slug = slugify(self.title)+'-' + \
             datetime.datetime.strftime(self.date, '%d-%m-%Y')
+        self.search_vector = SearchVector('content')
         return super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
