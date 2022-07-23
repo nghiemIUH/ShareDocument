@@ -77,15 +77,17 @@ const Header = (): JSX.Element => {
     }, [userState]);
 
     useEffect(() => {
-        const res = async () => {
-            return await notifyService.getNotification();
-        };
-        res().then((result) => {
-            setNotification((prev) => {
-                return [...prev, ...result.data];
+        if (userState.is_login) {
+            const res = async () => {
+                return await notifyService.getNotification();
+            };
+            res().then((result) => {
+                setNotification((prev) => {
+                    return [...prev, ...result.data];
+                });
             });
-        });
-    }, []);
+        }
+    }, [userState]);
 
     const handleSeenNotify = async () => {
         const result = await notifyService.seen();
