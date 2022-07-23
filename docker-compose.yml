@@ -10,6 +10,7 @@ services:
       - django:/code
       - react:/frontend
       - node:/node
+      - ../media:/code/media
     depends_on:
       - frontend
       - web
