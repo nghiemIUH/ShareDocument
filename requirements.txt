@@ -3,7 +3,6 @@ asgiref==3.5.2
 async-timeout==4.0.2
 attrs==21.4.0
 autopep8==1.6.0
-backports.zoneinfo==0.2.1
 bcrypt==3.2.2
 billiard==3.6.4.0
 certifi==2022.6.15
@@ -34,7 +33,7 @@ packaging==21.3
 paramiko==2.11.0
 Pillow==9.1.1
 prompt-toolkit==3.0.30
-psycopg2==2.9.3
+psycopg2-binary==2.9.3
 pycodestyle==2.8.0
 pycparser==2.21
 PyNaCl==1.5.0
