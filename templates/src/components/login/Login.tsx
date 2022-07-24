@@ -76,6 +76,12 @@ const Login = (): JSX.Element => {
                             id="password"
                         />
                     </div>
+                    <Link
+                        to="/forgot-password"
+                        className={cls("forgot_password")}
+                    >
+                        Quên mật khẩu
+                    </Link>
                     <button type="submit">Đăng nhập</button>
                 </form>
                 <div className={cls("login_or")}>
