@@ -37,8 +37,6 @@ const SearchResult = () => {
         };
 
         res().then((result) => {
-            console.log(result.data);
-
             setPost((prev) => {
                 return {
                     next: result.data.next?.replace(

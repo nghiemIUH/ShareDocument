@@ -10,17 +10,78 @@
     .header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         margin-bottom: 10px;
-        img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 10px;
+        div:first-child {
+            display: flex;
+            align-items: center;
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-right: 10px;
+            }
+            .meta {
+                .username {
+                    font-size: 15px;
+                    font-weight: 700;
+                }
+                .date {
+                    font-size: 11px;
+                    font-weight: 600;
+                    color: rgb(134, 130, 130);
+                    margin: 4px 0 0 -2px;
+                    display: flex;
+                    align-items: center;
+                    svg {
+                        font-size: 14px;
+                        margin-right: 5px;
+                        padding: 0;
+                    }
+                }
+            }
         }
-        .username {
-            font-size: 15px;
-            font-weight: 700;
+        div:last-child {
+            cursor: pointer;
+            position: relative;
+            .menu {
+                position: absolute;
+                width: 200px;
+                top: 20px;
+                right: 0;
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                background-color: #fff;
+                padding: 10px;
+                border-radius: 5px;
+                .delete_post {
+                    display: flex;
+                    align-items: center;
+                    padding: 10px 5px;
+                    &::before {
+                        content: "\f1f8";
+                        font-family: FontAwesome;
+                        margin-right: 12px;
+                    }
+                    &:hover {
+                        background-color: lightgray;
+                    }
+                }
+                .accept_post {
+                    display: flex;
+                    align-items: center;
+                    padding: 10px 5px;
+
+                    &:hover {
+                        background-color: lightgray;
+                    }
+                    &::before {
+                        content: "\f058";
+                        font-family: FontAwesome;
+                        margin-right: 12px;
+                    }
+                }
+            }
         }
     }
     .body {
@@ -33,10 +94,19 @@
     }
     .footer {
         display: flex;
+        align-items: center;
         padding: 5px 0;
         border-top: 1px solid #f0f2f5;
         border-bottom: 1px solid #f0f2f5;
-
+        .like {
+            display: flex;
+            align-items: center;
+            margin-right: 50px;
+        }
+        .comment {
+            display: flex;
+            align-items: center;
+        }
         svg {
             font-size: 25px;
             cursor: pointer;

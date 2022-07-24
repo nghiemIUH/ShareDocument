@@ -25,16 +25,11 @@ const Modal = ({
                 <GiCancel />
             </div>
 
-            <Swiper
-                spaceBetween={50}
-                slidesPerView={1}
-                onSlideChange={() => console.log("slide change")}
-                onSwiper={(swiper) => console.log(swiper)}
-            >
+            <Swiper spaceBetween={50} slidesPerView={1}>
                 {images.map((value, index) => {
                     return (
-                        <SwiperSlide>
-                            <img src={value} key={index} alt="" />;
+                        <SwiperSlide key={index}>
+                            <img src={value} alt="" />;
                         </SwiperSlide>
                     );
                 })}

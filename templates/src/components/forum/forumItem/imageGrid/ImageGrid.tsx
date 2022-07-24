@@ -8,7 +8,9 @@ const cls = classNames.bind(style);
 const ImageGrid = ({ images }: { images: string[] }) => {
     return (
         <div className={cls("image_grid")}>
-            {images.length === 1 ? (
+            {images.length === 0 ? (
+                <div></div>
+            ) : images.length === 1 ? (
                 <ImageGrid1 images={images} />
             ) : images.length === 2 ? (
                 <ImageGrid2 images={images} />
