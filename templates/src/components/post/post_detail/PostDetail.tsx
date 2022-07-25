@@ -7,6 +7,7 @@ import classNames from "classnames/bind";
 import hljs from "highlight.js";
 import "highlight.js/styles/default.css";
 import { has } from "lodash";
+import { Helmet } from "react-helmet";
 
 const cls = classNames.bind(style);
 
@@ -70,6 +71,15 @@ const PostDetail = (): JSX.Element => {
 
     return (
         <div className={cls("post_detail")}>
+            <Helmet>
+                <title>{"VNDev - " + detail.title}</title>
+                <meta
+                    name="description"
+                    property="og:description"
+                    content={detail.title}
+                />
+                <meta property="og:title" content={"VNDev - " + detail.title} />
+            </Helmet>
             <div className={cls("info")}>
                 <h1 className={cls("title")}>{detail.title}</h1>
                 <div className={cls("meta")}>

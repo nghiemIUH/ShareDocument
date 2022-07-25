@@ -11,6 +11,7 @@ import { HiOutlineClock } from "react-icons/hi";
 import dateFormate from "../../../config/fortmateDate";
 import { BsThreeDots } from "react-icons/bs";
 import { useAppSelector } from "../../../redux/hooks";
+import { Helmet } from "react-helmet";
 
 const cls = classNames.bind(style);
 
@@ -75,6 +76,16 @@ const ForumItem = (props: Props) => {
 
     return (
         <div className={cls("forum_item")}>
+            <Helmet>
+                <title>{"VNDev - " + props.post.content}</title>
+                <meta
+                    name="description"
+                    property="og:description"
+                    content="Forum"
+                />
+                <meta property="og:title" content="VNDev - Forum" />
+            </Helmet>
+
             <div className={cls("header")}>
                 <div>
                     <img

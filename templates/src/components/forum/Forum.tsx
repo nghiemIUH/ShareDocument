@@ -6,6 +6,7 @@ import { useAppSelector } from "../../redux/hooks";
 import forumService from "../../services/forum.service";
 import ModalUpload from "./modal_upload/ModalUpload";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const cls = classNames.bind(style);
 const Forum = () => {
@@ -57,11 +58,29 @@ const Forum = () => {
 
     return !currentUser.is_login ? (
         <div className={cls("not_login")}>
+            <Helmet>
+                <title>VNDev - Forum</title>
+                <meta
+                    name="description"
+                    property="og:description"
+                    content="Forum"
+                />
+                <meta property="og:title" content="VNDev - Forum" />
+            </Helmet>
             <h4>Bạn vui lòng đăng nhập để sử dụng chức năng này</h4>
             <Link to="/login">Đăng nhập</Link>
         </div>
     ) : (
         <div className={cls("forum")}>
+            <Helmet>
+                <title>VNDev - Forum</title>
+                <meta
+                    name="description"
+                    property="og:description"
+                    content="Forum"
+                />
+                <meta property="og:title" content="VNDev - Forum" />
+            </Helmet>
             <div className={cls("writting")}>
                 <img
                     src={

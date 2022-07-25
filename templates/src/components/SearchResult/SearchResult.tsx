@@ -4,6 +4,7 @@ import postService from "../../services/post.service";
 import style from "./SearchResult.module.scss";
 import classNames from "classnames/bind";
 import PostItem from "../post/post_item/PostItem";
+import { Helmet } from "react-helmet";
 
 const cls = classNames.bind(style);
 interface PostType {
@@ -53,6 +54,15 @@ const SearchResult = () => {
 
     return (
         <div className={cls("search")}>
+            <Helmet>
+                <title>{"VNDev - " + searchParams[0].get("keyword")}</title>
+                <meta
+                    name="description"
+                    property="og:description"
+                    content="Forum"
+                />
+                <meta property="og:title" content="VNDev - Forum" />
+            </Helmet>
             <div className={cls("blog_post")}>
                 {post.posts.map((value, index) => {
                     return <PostItem post={value} key={index} />;

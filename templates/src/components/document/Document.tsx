@@ -4,6 +4,7 @@ import style from "./Document.module.scss";
 import { BiSearch } from "react-icons/bi";
 import DocumentItem from "./document_item/DocumentItem";
 import documentService from "../../services/document.service";
+import { Helmet } from "react-helmet";
 
 const cls = classNames.bind(style);
 
@@ -101,6 +102,15 @@ const Document = () => {
 
     return (
         <div className={cls("document")}>
+            <Helmet>
+                <title>VNDev - Document</title>
+                <meta
+                    name="description"
+                    property="og:description"
+                    content="Document"
+                />
+                <meta property="og:title" content="VNDev - Document" />
+            </Helmet>
             <div className={cls("document_img")}>
                 <img src="/document.jpg" alt="" />
             </div>
