@@ -13,6 +13,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     type: string;
     value: string;
     onChange: ChangeEventHandler<HTMLInputElement> | undefined;
+    placeholder?: string;
 }
 
 const Input = ({
@@ -23,6 +24,7 @@ const Input = ({
     type,
     value,
     onChange,
+    placeholder,
 }: Props): JSX.Element => {
     const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
         validate(e.target);
@@ -43,6 +45,7 @@ const Input = ({
                     id={"input_" + id}
                     onBlur={(e) => handleBlur(e)}
                     data-rule={rule}
+                    placeholder={placeholder}
                 />
             }
         </div>

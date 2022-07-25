@@ -40,6 +40,27 @@ class AuthService {
             data,
         });
     }
+    getRetPasswordToken(email: string) {
+        // send mail
+        return axiosNotAuth({
+            url: "/user/send-mail-password/",
+            method: "post",
+            data: {
+                email,
+            },
+        });
+    }
+    handleResetPassword(data: {
+        toke: string;
+        uidb64: string;
+        password: string;
+    }) {
+        return axiosNotAuth({
+            url: "/user/reset-password/",
+            method: "post",
+            data: { ...data },
+        });
+    }
 }
 
 export default new AuthService();

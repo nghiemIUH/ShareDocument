@@ -5,16 +5,21 @@ import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import tokenService from "./services/token.service";
 import userAPI from "./redux/user/userAPI";
 import postAPI from "./redux/baseData/postAPI";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import PostDetailPage from "./pages/PostDetailPage";
-import PostCategoryPage from "./pages/PostCategoryPage";
-import DocumentPage from "./pages/DocumentPage";
-import NotFound from "./pages/NotFound";
-import SearchResultPage from "./pages/SearchResultPage";
-import ForumPage from "./pages/ForumPage";
-import ForumDetailNotificationPage from "./pages/ForumDetailNotificationPage";
+import NotFound from "./components/NotFound";
+import ContentWrapper from "./components/content/ContentWrapper";
+import Post from "./components/post/Post";
+import Header from "./components/header/Header";
+import Login from "./components/login/Login";
+import Register from "./components/register/Register";
+import PostDetail from "./components/post/post_detail/PostDetail";
+import PostCategory from "./components/post/postCategory/PostCategory";
+import Document from "./components/document/Document";
+import SearchResult from "./components/SearchResult/SearchResult";
+import Forum from "./components/forum/Forum";
+import ForumDetailNotification from "./components/forum/forumDetailNotification/ForumDetailNotification";
+import Footer from "./components/footer/Footer";
+import GetToken from "./components/forgot_password/get_token/GetToken";
+import ChangePassword from "./components/forgot_password/change_password/ChangePassword";
 
 function App() {
     const userState = useAppSelector((state) => state.user);
@@ -44,21 +49,50 @@ function App() {
 
     return (
         <div className="App">
+            <Header />
             <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/post-detail/:slug" element={<PostDetailPage />} />
-                <Route path="/category/:slug" element={<PostCategoryPage />} />
-                <Route path="/document" element={<DocumentPage />} />
-                <Route path="/search" element={<SearchResultPage />} />
-                <Route path="/forum" element={<ForumPage />} />
+                <Route
+                    path="/"
+                    element={<ContentWrapper Component={<Post />} />}
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route
+                    path="/post-detail/:slug"
+                    element={<ContentWrapper Component={<PostDetail />} />}
+                />
+                <Route
+                    path="/category/:slug"
+                    element={<ContentWrapper Component={<PostCategory />} />}
+                />
+                <Route
+                    path="/document"
+                    element={<ContentWrapper Component={<Document />} />}
+                />
+                <Route
+                    path="/search"
+                    element={<ContentWrapper Component={<SearchResult />} />}
+                />
+                <Route
+                    path="/forum"
+                    element={<ContentWrapper Component={<Forum />} />}
+                />
                 <Route
                     path="/forum/:id"
-                    element={<ForumDetailNotificationPage />}
+                    element={
+                        <ContentWrapper
+                            Component={<ForumDetailNotification />}
+                        />
+                    }
+                />
+                <Route path="/forgot-password" element={<GetToken />} />
+                <Route
+                    path="/reset-password/:uidb64/:token"
+                    element={<ChangePassword />}
                 />
                 <Route path="*" element={<NotFound />} />
             </Routes>
+            <Footer />
         </div>
     );
 }

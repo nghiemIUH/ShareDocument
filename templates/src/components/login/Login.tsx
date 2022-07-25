@@ -7,6 +7,7 @@ import userAPI from "../../redux/user/userAPI";
 import { useNavigate } from "react-router-dom";
 import Input from "../input/Input";
 import { isAllowSubmit } from "../input/validate";
+import { Helmet } from "react-helmet";
 
 const cls = classNames.bind(style);
 
@@ -45,6 +46,15 @@ const Login = (): JSX.Element => {
 
     return (
         <div className={cls("login_wrapper")}>
+            <Helmet>
+                <title>VNDev - Login</title>
+                <meta
+                    name="description"
+                    property="og:description"
+                    content={"Login"}
+                />
+                <meta property="og:title" content="VNDev - Login" />
+            </Helmet>
             <div className={cls("login")}>
                 <div className={cls("login_title")}>
                     <div>Đăng nhập</div>
@@ -76,6 +86,12 @@ const Login = (): JSX.Element => {
                             id="password"
                         />
                     </div>
+                    <Link
+                        to="/forgot-password"
+                        className={cls("forgot_password")}
+                    >
+                        Quên mật khẩu
+                    </Link>
                     <button type="submit">Đăng nhập</button>
                 </form>
                 <div className={cls("login_or")}>
