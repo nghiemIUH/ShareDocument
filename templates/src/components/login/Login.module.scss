@@ -42,6 +42,13 @@
 
         form {
             width: 100%;
+            .forgot_password {
+                font-size: 13px;
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
             .form_group {
                 width: 100%;
                 padding: 10px 0;
