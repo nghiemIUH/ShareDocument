@@ -32,7 +32,6 @@ class AuthService {
             method: "get",
         });
     }
-
     register(data: FormData) {
         return axiosNotAuth({
             url: "/user/register/",

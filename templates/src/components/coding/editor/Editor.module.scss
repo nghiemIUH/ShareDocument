@@ -1,0 +1,176 @@
+.editor {
+    display: flex;
+    width: 100%;
+    background-color: #f3f7f7;
+
+    .even {
+        min-height: 100%;
+        width: 35%;
+        overflow-y: auto;
+        border: 1px solid lightgray;
+        padding: 10px;
+        text-align: justify;
+    }
+    .edit {
+        width: 65%;
+        border-bottom: 1px solid lightgray;
+
+        .language {
+            width: 100%;
+            margin: 20px;
+            select {
+                font: 400 14px sans-serif;
+                line-height: 1;
+                outline: 0;
+                padding: 0.65em 2.5em 0.55em 0.75em;
+                background-color: var(--baseBg);
+                background-image: linear-gradient(var(--baseFg), var(--baseFg)),
+                    linear-gradient(
+                        -135deg,
+                        transparent 50%,
+                        var(--accentBg) 50%
+                    ),
+                    linear-gradient(
+                        -225deg,
+                        transparent 50%,
+                        var(--accentBg) 50%
+                    ),
+                    linear-gradient(var(--accentBg) 42%, var(--accentFg) 42%);
+                background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+                background-size: 1px 100%, 20px 22px, 20px 22px, 20px 100%;
+                background-position: right 20px center, right bottom,
+                    right bottom, right bottom;
+                border-radius: 5px;
+                margin-right: 20px;
+                border: 1px solid #aaa;
+                cursor: pointer;
+            }
+        }
+        .submit {
+            padding: 10px;
+            button {
+                font-size: 15px;
+                color: #fff;
+                background-color: #1ba94c;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                font-weight: 700;
+                cursor: pointer;
+                margin-bottom: 10px;
+            }
+
+            .result_content {
+                .result {
+                    font-size: 30px;
+                    font-weight: 900;
+                    color: #d11534;
+                    background-color: #fff;
+                    padding: 10px;
+                }
+                .result_testcase {
+                    display: flex;
+                    width: 100%;
+                    margin-top: 20px;
+                    background-color: #fff;
+                    .left {
+                        width: 40%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        div {
+                            width: 100%;
+                            cursor: pointer;
+                            padding: 10px;
+                            color: #d11534;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-evenly;
+                            svg {
+                                width: 30px;
+                                height: 30px;
+                            }
+                        }
+                    }
+                    .right {
+                        width: 60%;
+                        display: flex;
+                        flex-direction: column;
+                        padding: 10px;
+
+                        .inputs {
+                            display: flex;
+                            flex-direction: column;
+                            .input_tlt {
+                                color: #576871;
+                                font-weight: 400;
+                                font-size: 14px;
+                                margin: 10px 0;
+                            }
+                            .input_val {
+                                width: 100%;
+                                background-color: #f3f7f7;
+                                height: 30px;
+                                font-size: 14px;
+                                margin-bottom: 3px;
+                                display: flex;
+                                div:first-child {
+                                    border-right: 1px solid #e7eeef;
+                                    padding: 10px;
+                                    color: #b7c9cc;
+                                }
+                                div:last-child {
+                                    padding: 10px;
+                                    background-color: transparent;
+                                    white-space: pre-wrap;
+                                    font-weight: 700;
+                                }
+                                div {
+                                    display: flex;
+                                    align-items: center;
+                                }
+                            }
+                        }
+
+                        .your_output {
+                            margin-top: 10px;
+                            .your_output_tlt {
+                                color: #576871;
+                                font-weight: 400;
+                                font-size: 14px;
+                                margin: 10px 0;
+                            }
+                            div:last-child {
+                                padding: 10px;
+                                background-color: transparent;
+                                white-space: pre-wrap;
+                                font-weight: 700;
+                            }
+                        }
+                        .expected_output {
+                            margin-top: 10px;
+                            .expected_output_tlt {
+                                color: #576871;
+                                font-weight: 400;
+                                font-size: 14px;
+                                margin: 10px 0;
+                            }
+                            div:last-child {
+                                padding: 10px;
+                                background-color: transparent;
+                                white-space: pre-wrap;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    * {
+        animation: none;
+        transform: none;
+        transition: none;
+    }
+}

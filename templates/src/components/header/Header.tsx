@@ -144,6 +144,9 @@ const Header = (): JSX.Element => {
                         <li onClick={() => setShowToggle(false)}>
                             <Link to="/forum">Diễn đàn</Link>
                         </li>
+                        <li onClick={() => setShowToggle(false)}>
+                            <Link to="/code">Luyện code</Link>
+                        </li>
                         {!userState.is_login && (
                             <>
                                 <li onClick={() => setShowToggle(false)}>
@@ -179,6 +182,9 @@ const Header = (): JSX.Element => {
                     </li>
                     <li>
                         <Link to="/forum">Diễn đàn</Link>
+                    </li>
+                    <li>
+                        <Link to="/coding">Luyện code</Link>
                     </li>
                 </ul>
             </div>
@@ -223,11 +229,11 @@ const Header = (): JSX.Element => {
                                       }
                             }
                         >
-                            {notification.map((value, index) => {
+                            {notification.map((value) => {
                                 return (
                                     <div
                                         className={cls("note_item")}
-                                        key={index}
+                                        key={value.id}
                                     >
                                         <div
                                             onClick={() =>

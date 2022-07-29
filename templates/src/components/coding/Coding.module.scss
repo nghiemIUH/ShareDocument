@@ -1,0 +1,15 @@
+.coding {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    .menu {
+        display: flex;
+        div {
+            padding: 10px;
+            cursor: pointer;
+            animation: none;
+            transition: none;
+        }
+    }
+}

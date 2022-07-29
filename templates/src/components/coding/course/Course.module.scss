@@ -1,0 +1,84 @@
+@import "../../Resposive.scss";
+
+.course {
+    width: 100%;
+    .your_process {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+
+        .list_process {
+            width: 100%;
+            margin-top: 20px;
+            padding: 0 60px;
+            @include responsive_max_600 {
+                padding: 0;
+            }
+            @include responsive_min_600 {
+                padding: 0 10px;
+            }
+            @include responsive_min_768 {
+                padding: 0 30px;
+            }
+            .process_item {
+                width: 42%;
+                margin: 20px;
+                padding: 20px;
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                position: relative;
+                height: 170px;
+                float: left;
+                transition: all 0.2s ease-in-out;
+                &:hover {
+                    transform: scale(1.05);
+                }
+
+                @include responsive_max_600 {
+                    width: 90%;
+                }
+
+                svg {
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    top: 0;
+                    right: 0;
+                }
+                h5 {
+                    color: #aaa;
+                }
+                .progressBar {
+                    width: 100%;
+                    border-radius: 5px;
+                    height: 7px;
+                    background-color: gray;
+                    position: relative;
+                    margin-top: 20px;
+                    div {
+                        background-color: #1ba94c;
+                        height: 100%;
+                        border-radius: 5px;
+                    }
+                    span {
+                        font-size: 10px;
+                        position: absolute;
+                        top: -10px;
+                        left: 50%;
+                    }
+                }
+                .btn_solve {
+                    margin-top: 20px;
+                    a {
+                        padding: 10px 20px;
+                        text-decoration: none;
+                        color: #fff;
+                        background-color: #1ba94c;
+                        font-weight: 800;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+    }
+}

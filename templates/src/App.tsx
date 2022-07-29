@@ -20,6 +20,8 @@ import ForumDetailNotification from "./components/forum/forumDetailNotification/
 import Footer from "./components/footer/Footer";
 import GetToken from "./components/forgot_password/get_token/GetToken";
 import ChangePassword from "./components/forgot_password/change_password/ChangePassword";
+import Coding from "./components/coding/Coding";
+import Editor from "./components/coding/editor/Editor";
 
 function App() {
     const userState = useAppSelector((state) => state.user);
@@ -90,6 +92,8 @@ function App() {
                     path="/reset-password/:uidb64/:token"
                     element={<ChangePassword />}
                 />
+                <Route path="/coding" element={<Coding />} />
+                <Route path="/coding/editor" element={<Editor />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />

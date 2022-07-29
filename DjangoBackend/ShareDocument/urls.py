@@ -30,6 +30,7 @@ urlpatterns = [
     path('document/', include('Document.urls')),
     path('forum/', include('Forum.urls')),
     path('notification/', include('Notification.urls')),
+    path('coding/', include('Coding.urls')),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
 

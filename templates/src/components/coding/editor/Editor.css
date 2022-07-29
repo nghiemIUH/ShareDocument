@@ -1,0 +1,9 @@
+canvas.decorationsOverviewRuler {
+    visibility: hidden;
+}
+.margin-view-overlays {
+    height: 100% !important;
+}
+.view-lines {
+    height: 100% !important;
+}

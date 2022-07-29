@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'rest_framework',
     'Forum',
-    'Notification'
+    'Notification',
+    'Coding'
 ]
 SITE_ID = 1
 
